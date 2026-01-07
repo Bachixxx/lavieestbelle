@@ -117,7 +117,7 @@ export default function AdminPage() {
           <CardHeader>
             <CardTitle>Gestion du contenu</CardTitle>
             <CardDescription>Bientôt ici, vous pourrez modifier les soins, les catégories, et bien plus encore.</CardDescription>
-          </-cardHeader>
+          </CardHeader>
           <CardContent>
             <p>En construction...</p>
           </CardContent>
