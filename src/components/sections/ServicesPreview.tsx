@@ -22,7 +22,7 @@ export function ServicesPreview() {
           {serviceCategories.map((category) => {
             const image = getImageById(category.imageId);
             return (
-              <Card key={category.id} className="overflow-hidden transition-all hover:shadow-lg hover:-translate-y-1">
+              <Card key={category.id} className="overflow-hidden transition-all hover:shadow-lg hover:-translate-y-1 flex flex-col">
                 <Link href={`/services#${category.id}`} className="block h-full flex flex-col">
                   <CardHeader className="p-0">
                     {image && (
@@ -40,7 +40,7 @@ export function ServicesPreview() {
                   </CardHeader>
                   <CardContent className="p-6 flex-grow flex flex-col">
                     <CardTitle className="text-xl font-bold font-headline">{category.title}</CardTitle>
-                    <CardDescription className="mt-2 text-base line-clamp-2 flex-grow">{category.previewDescription}</CardDescription>
+                    <CardDescription className="mt-2 text-base line-clamp-3 flex-grow">{category.previewDescription}</CardDescription>
                   </CardContent>
                 </Link>
               </Card>
