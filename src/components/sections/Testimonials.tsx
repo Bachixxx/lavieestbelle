@@ -1,15 +1,42 @@
-import { Star } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
+'use client';
+
+import { Star } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "@/components/ui/carousel";
-import { testimonials } from "@/lib/data";
+} from '@/components/ui/carousel';
+import type { Testimonial } from '@/lib/data';
+import { useCollection } from '@/firebase';
+import { Skeleton } from '../ui/skeleton';
+
+function TestimonialSkeleton() {
+  return (
+    <div className="p-1 h-full">
+      <Card className="h-full flex flex-col justify-between">
+        <CardContent className="flex flex-col gap-4 p-6">
+          <div className="flex gap-1">
+            <Skeleton className="h-5 w-5" />
+            <Skeleton className="h-5 w-5" />
+            <Skeleton className="h-5 w-5" />
+            <Skeleton className="h-5 w-5" />
+            <Skeleton className="h-5 w-5" />
+          </div>
+          <Skeleton className="h-4 w-full mt-2" />
+          <Skeleton className="h-4 w-5/6 mt-1" />
+          <Skeleton className="h-4 w-1/3 self-end mt-2" />
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
 
 export function Testimonials() {
+  const { data: testimonials, loading } = useCollection<Testimonial>('testimonials');
+
   return (
     <section className="w-full py-12 md:py-24 lg:py-32">
       <div className="container mx-auto px-4 md:px-6">
@@ -25,12 +52,25 @@ export function Testimonials() {
         </div>
         <Carousel
           opts={{
-            align: "start",
+            align: 'start',
           }}
           className="w-full max-w-4xl mx-auto mt-12"
         >
           <CarouselContent>
-            {testimonials.map((testimonial) => (
+            {loading && (
+              <>
+                <CarouselItem className="md:basis-1/2 lg:basis-1/3">
+                  <TestimonialSkeleton />
+                </CarouselItem>
+                <CarouselItem className="md:basis-1/2 lg:basis-1/3">
+                  <TestimonialSkeleton />
+                </CarouselItem>
+                <CarouselItem className="md:basis-1/2 lg:basis-1/3">
+                  <TestimonialSkeleton />
+                </CarouselItem>
+              </>
+            )}
+            {testimonials?.map((testimonial) => (
               <CarouselItem key={testimonial.id} className="md:basis-1/2 lg:basis-1/3">
                 <div className="p-1 h-full">
                   <Card className="h-full flex flex-col justify-between">
@@ -40,16 +80,12 @@ export function Testimonials() {
                           <Star
                             key={i}
                             className={`h-5 w-5 ${
-                              i < testimonial.rating
-                                ? "text-primary fill-primary"
-                                : "text-muted-foreground/50"
+                              i < testimonial.rating ? 'text-primary fill-primary' : 'text-muted-foreground/50'
                             }`}
                           />
                         ))}
                       </div>
-                      <p className="text-base italic text-foreground/80">
-                        &quot;{testimonial.text}&quot;
-                      </p>
+                      <p className="text-base italic text-foreground/80">&quot;{testimonial.text}&quot;</p>
                       <p className="font-semibold text-right">- {testimonial.author}</p>
                     </CardContent>
                   </Card>
