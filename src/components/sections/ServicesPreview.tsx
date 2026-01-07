@@ -26,13 +26,13 @@ export function ServicesPreview() {
                 <Link href={`/services#${category.id}`} className="block h-full flex flex-col">
                   <CardHeader className="p-0">
                     {image && (
-                      <div className="aspect-w-4 aspect-h-3">
+                      <div className="relative aspect-[4/3]">
                         <Image
                           src={image.imageUrl}
                           alt={image.description}
-                          width={600}
-                          height={400}
-                          className="object-cover w-full h-full"
+                          fill
+                          className="object-cover"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                           data-ai-hint={image.imageHint}
                         />
                       </div>
