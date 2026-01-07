@@ -5,6 +5,7 @@ import { initializeFirebase } from "@/firebase/index.server";
 import { setDoc, doc, addDoc, collection, updateDoc, deleteDoc } from "firebase/firestore";
 import * as z from "zod";
 import { revalidatePath } from "next/cache";
+import { serviceSchema } from "./service-form";
 
 const { firestore } = initializeFirebase();
 
@@ -68,14 +69,6 @@ export async function updateContactInfo(values: z.infer<typeof contactInfoSchema
     }
 }
 
-// Schéma de validation pour un soin
-export const serviceSchema = z.object({
-    name: z.string().min(1, "Le nom est requis"),
-    description: z.string().optional(),
-    price: z.string().optional(),
-    duration: z.string().optional(),
-    category: z.string().min(1, "La catégorie est requise"),
-});
 
 export async function addService(values: z.infer<typeof serviceSchema>) {
     const validatedFields = serviceSchema.safeParse(values);

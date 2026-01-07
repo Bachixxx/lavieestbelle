@@ -7,12 +7,21 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { addService, serviceSchema, updateService } from "./actions";
+import { addService, updateService } from "./actions";
 import { useToast } from "@/hooks/use-toast";
 import { useEffect } from "react";
 import { Service, ServiceCategory } from "@/lib/data";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+
+// Schéma de validation pour un soin
+export const serviceSchema = z.object({
+    name: z.string().min(1, "Le nom est requis"),
+    description: z.string().optional(),
+    price: z.string().optional(),
+    duration: z.string().optional(),
+    category: z.string().min(1, "La catégorie est requise"),
+});
 
 interface ServiceFormProps {
     isOpen: boolean;
@@ -38,7 +47,7 @@ export function ServiceForm({ isOpen, setIsOpen, service, categories }: ServiceF
 
     useEffect(() => {
         if (isOpen) {
-            if (isEditing) {
+            if (isEditing && service) {
                 form.reset(service);
             } else {
                 form.reset({
@@ -53,7 +62,7 @@ export function ServiceForm({ isOpen, setIsOpen, service, categories }: ServiceF
     }, [isOpen, service, isEditing, form]);
 
     async function onSubmit(values: z.infer<typeof serviceSchema>) {
-        const result = isEditing
+        const result = isEditing && service
             ? await updateService(service.id, values)
             : await addService(values);
 
