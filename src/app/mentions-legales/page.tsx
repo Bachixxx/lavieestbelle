@@ -1,3 +1,4 @@
+
 export default function MentionsLegalesPage() {
   return (
     <div className="bg-background py-12 md:py-24">
@@ -34,9 +35,9 @@ export default function MentionsLegalesPage() {
           <h2 className="text-2xl font-bold font-headline text-primary/90">3. Hébergement</h2>
           <p>Le site est hébergé par :</p>
           <div className="pl-4 border-l-2 border-primary/50">
-            <p>Google Cloud EMEA Ltd. (Firebase Hosting)</p>
-            <p>70 Sir John Rogerson's Quay</p>
-            <p>Dublin 2, Irlande</p>
+            <p>Infomaniak Network SA</p>
+            <p>Rue Eugène-Marziano 25</p>
+            <p>1227 Les Acacias (GE), Suisse</p>
           </div>
         </section>
 
