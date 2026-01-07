@@ -12,7 +12,6 @@ import {
 } from '@/components/ui/sheet';
 import { navLinks } from '@/lib/data';
 import { useState } from 'react';
-import { DialogTitle } from '@radix-ui/react-dialog';
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -50,17 +49,15 @@ export function Header() {
             </SheetTrigger>
             <SheetContent side="right">
               <SheetHeader>
-                <DialogTitle>
-                  <SheetTitle>
-                    <Link
-                      href="/"
-                      className="font-headline text-xl font-bold text-primary"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      La Vie est Belle
-                    </Link>
-                  </SheetTitle>
-                </DialogTitle>
+                <SheetTitle>
+                  <Link
+                    href="/"
+                    className="font-headline text-xl font-bold text-primary"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    La Vie est Belle
+                  </Link>
+                </SheetTitle>
               </SheetHeader>
               <div className="flex flex-col gap-6 p-6">
                 <nav className="flex flex-col gap-4">
