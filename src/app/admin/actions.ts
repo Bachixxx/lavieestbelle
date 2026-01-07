@@ -3,8 +3,8 @@
 
 import { initializeFirebase } from "@/firebase/index.server";
 import { testimonials as initialTestimonials } from "@/lib/data";
-import { initialServiceCategories, initialServices } from "@/lib/initial-data";
-import { writeBatch, doc, collection } from "firebase/firestore";
+import { initialServiceCategories, initialServices, initialAboutContent } from "@/lib/initial-data";
+import { writeBatch, doc, collection, setDoc } from "firebase/firestore";
 
 const { firestore } = initializeFirebase();
 
@@ -38,6 +38,17 @@ export async function populateTestimonials() {
     return { success: true };
   } catch (error: any) {
     console.error("Error populating testimonials: ", error);
+    return { success: false, error: error.message };
+  }
+}
+
+export async function populateAboutContent() {
+  try {
+    const docRef = doc(firestore, "aboutContent", initialAboutContent.id);
+    await setDoc(docRef, initialAboutContent);
+    return { success: true };
+  } catch (error: any) {
+    console.error("Error populating about content: ", error);
     return { success: false, error: error.message };
   }
 }

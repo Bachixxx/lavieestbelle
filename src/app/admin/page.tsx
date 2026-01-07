@@ -4,12 +4,13 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
-import { populateDatabase, populateTestimonials } from './actions';
+import { populateDatabase, populateTestimonials, populateAboutContent } from './actions';
 
 export default function AdminPage() {
   const { toast } = useToast();
   const [isPopulating, setIsPopulating] = useState(false);
   const [isTestimonialPopulating, setIsTestimonialPopulating] = useState(false);
+  const [isAboutPopulating, setIsAboutPopulating] = useState(false);
 
   const handlePopulate = async () => {
     setIsPopulating(true);
@@ -59,6 +60,30 @@ export default function AdminPage() {
     }
   };
 
+  const handlePopulateAbout = async () => {
+    setIsAboutPopulating(true);
+    try {
+      const result = await populateAboutContent();
+      if (result.success) {
+        toast({
+          title: 'Succès',
+          description: 'Le contenu de la page "À Propos" a été ajouté à la base de données.',
+        });
+      } else {
+        throw new Error(result.error || 'Une erreur inconnue est survenue.');
+      }
+    } catch (error: any) {
+      console.error(error);
+      toast({
+        variant: 'destructive',
+        title: 'Erreur',
+        description: `Une erreur est survenue lors de l'ajout du contenu : ${error.message}`,
+      });
+    } finally {
+      setIsAboutPopulating(false);
+    }
+  };
+
   return (
     <div className="container mx-auto max-w-4xl px-4 py-12 md:py-24">
       <div className="mb-8">
@@ -75,12 +100,15 @@ export default function AdminPage() {
               Cette opération n'est à faire qu'une seule fois.
             </CardDescription>
           </CardHeader>
-          <CardContent className="flex flex-col sm:flex-row gap-4">
+          <CardContent className="flex flex-col sm:flex-row gap-4 flex-wrap">
             <Button onClick={handlePopulate} disabled={isPopulating}>
               {isPopulating ? 'Initialisation en cours...' : 'Initialiser les Soins & Catégories'}
             </Button>
             <Button onClick={handlePopulateTestimonials} disabled={isTestimonialPopulating}>
               {isTestimonialPopulating ? 'Initialisation en cours...' : 'Initialiser les Témoignages'}
+            </Button>
+            <Button onClick={handlePopulateAbout} disabled={isAboutPopulating}>
+              {isAboutPopulating ? 'Initialisation en cours...' : 'Initialiser la page "À Propos"'}
             </Button>
           </CardContent>
         </Card>
@@ -89,7 +117,7 @@ export default function AdminPage() {
           <CardHeader>
             <CardTitle>Gestion du contenu</CardTitle>
             <CardDescription>Bientôt ici, vous pourrez modifier les soins, les catégories, et bien plus encore.</CardDescription>
-          </CardHeader>
+          </-cardHeader>
           <CardContent>
             <p>En construction...</p>
           </CardContent>

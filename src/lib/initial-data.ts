@@ -42,3 +42,15 @@ export const initialServices = [
     { id: 'co2', category: 'coiffure', name: 'Couleur (racines)', duration: '90 min', price: '80 CHF', description: 'Application en racines, hors coupe et brushing.' },
     { id: 'co3', category: 'coiffure', name: 'Soin Profond Kératine', duration: '45 min', price: '70 CHF', description: 'Réparation intense pour cheveux abîmés et secs.' }
 ];
+
+export const initialAboutContent = {
+    id: 'content',
+    title: 'Notre Histoire, Votre Bien-être',
+    subtitle: 'L\'institut de beauté La Vie est Belle a ouvert ses portes à Bellevue le 7 octobre 2016. Nous offrons des soins de beauté du visage, du corps ainsi que des cheveux tant pour les dames que pour les messieurs.',
+    catherineTitle: 'Catherine Nussbaumer - Directrice & Esthéticienne',
+    catherineText: 'Catherine a achevé un CFC d\'assistante en pharmacie en 2000 pour ensuite réaliser des études en esthétique. Après avoir travaillé 10 ans dans un salon privé, elle a décidé de se lancer comme indépendante et a ouvert son institut à Bellevue.',
+    soniaTitle: 'Sonia - Spécialiste Coiffure',
+    soniaText: 'Sonia, sa collaboratrice, est au bénéfice d\'une expérience de plus de 25 ans dans le domaine de la coiffure et est spécialisée dans les soins du cheveu.',
+    conclusion: 'Vous y serez toujours bien accueillis et reçus avec bienveillance pour recevoir les meilleurs conseils en matière de bien-être et de soins esthétiques.',
+    imageId: 'about-portrait',
+};

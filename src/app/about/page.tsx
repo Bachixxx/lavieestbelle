@@ -1,21 +1,82 @@
+'use client';
+
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { getImageById } from '@/lib/data';
 import Link from 'next/link';
+import { useDoc } from '@/firebase';
+import { Skeleton } from '@/components/ui/skeleton';
+
+interface AboutContent {
+  id: string;
+  title: string;
+  subtitle: string;
+  catherineTitle: string;
+  catherineText: string;
+  soniaTitle: string;
+  soniaText: string;
+  conclusion: string;
+  imageId: string;
+}
+
+function AboutPageSkeleton() {
+  return (
+    <div className="bg-background py-12 md:py-24">
+      <div className="container mx-auto max-w-7xl px-4">
+        <div className="text-center mb-12">
+          <Skeleton className="h-10 w-3/4 mx-auto" />
+          <Skeleton className="h-5 w-1/2 mx-auto mt-6" />
+        </div>
+
+        <div className="grid lg:grid-cols-5 gap-12 items-start">
+            <div className="lg:col-span-2 relative h-full min-h-[400px] lg:min-h-[600px] rounded-lg overflow-hidden shadow-xl">
+              <Skeleton className="h-full w-full" />
+            </div>
+
+            <div className="lg:col-span-3 space-y-10">
+                <div className="space-y-4">
+                    <Skeleton className="h-8 w-3/4" />
+                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-4 w-5/6" />
+                </div>
+                <div className="space-y-4">
+                    <Skeleton className="h-8 w-1/2" />
+                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-4 w-4/5" />
+                </div>
+                <Skeleton className="h-6 w-full mt-4" />
+                <div className="pt-4">
+                  <Skeleton className="h-12 w-40" />
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function AboutPage() {
-  const aboutImage = getImageById('about-portrait');
+  const { data: content, loading } = useDoc<AboutContent>('aboutContent/content');
+
+  if (loading) {
+    return <AboutPageSkeleton />;
+  }
+  
+  if (!content) {
+    return <div className="text-center py-24">Contenu non trouvé. Veuillez initialiser les données depuis la page Admin.</div>;
+  }
+
+  const aboutImage = getImageById(content.imageId);
 
   return (
     <div className="bg-background py-12 md:py-24">
       <div className="container mx-auto max-w-7xl px-4">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold tracking-tight sm:text-6xl font-headline text-primary">
-            Notre Histoire, Votre Bien-être
+            {content.title}
           </h1>
           <p className="mt-4 max-w-3xl mx-auto text-lg text-muted-foreground">
-            L&apos;institut de beauté La Vie est Belle a ouvert ses portes à Bellevue le 7 octobre 2016.
-            Nous offrons des soins de beauté du visage, du corps ainsi que des cheveux tant pour les dames que pour les messieurs.
+            {content.subtitle}
           </p>
         </div>
 
@@ -35,21 +96,21 @@ export default function AboutPage() {
 
             <div className="lg:col-span-3 space-y-10 text-lg text-foreground/80">
                 <div className="space-y-4">
-                    <h2 className="text-3xl font-bold font-headline text-primary/90">Catherine Nussbaumer - Directrice & Esthéticienne</h2>
+                    <h2 className="text-3xl font-bold font-headline text-primary/90">{content.catherineTitle}</h2>
                     <p>
-                    Catherine a achevé un CFC d&apos;assistante en pharmacie en 2000 pour ensuite réaliser des études en esthétique. Après avoir travaillé 10 ans dans un salon privé, elle a décidé de se lancer comme indépendante et a ouvert son institut à Bellevue.
+                      {content.catherineText}
                     </p>
                 </div>
 
                 <div className="space-y-4">
-                    <h2 className="text-3xl font-bold font-headline text-primary/90">Sonia - Spécialiste Coiffure</h2>
+                    <h2 className="text-3xl font-bold font-headline text-primary/90">{content.soniaTitle}</h2>
                     <p>
-                    Sonia, sa collaboratrice, est au bénéfice d&apos;une expérience de plus de 25 ans dans le domaine de la coiffure et est spécialisée dans les soins du cheveu.
+                      {content.soniaText}
                     </p>
                 </div>
 
                 <p className="font-semibold text-foreground text-xl pt-4">
-                Vous y serez toujours bien accueillis et reçus avec bienveillance pour recevoir les meilleurs conseils en matière de bien-être et de soins esthétiques.
+                  {content.conclusion}
                 </p>
                 <div className="pt-4">
                     <Button asChild size="lg">
