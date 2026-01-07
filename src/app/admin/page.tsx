@@ -6,6 +6,8 @@ import { populateDatabase } from "./actions";
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Terminal } from "lucide-react";
 
 
 export default function AdminPage() {
@@ -46,6 +48,15 @@ export default function AdminPage() {
           Panneau de gestion du contenu du site.
         </p>
       </div>
+
+      <Alert className="mb-8 border-amber-500 text-amber-700">
+        <Terminal className="h-4 w-4 !text-amber-700" />
+        <AlertTitle className="text-amber-800">Action Manuelle Requise</AlertTitle>
+        <AlertDescription>
+          Après avoir cliqué sur le bouton ci-dessous, veuillez me confirmer que l'opération a réussi afin que je puisse restaurer les règles de sécurité de la base de données.
+        </AlertDescription>
+      </Alert>
+
 
       <Card className="shadow-lg">
         <CardHeader>
