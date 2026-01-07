@@ -1,7 +1,9 @@
 "use server";
 
-import { firestore } from "@/firebase/index.server";
+import { initializeFirebase } from "@/firebase/index.server";
 import { testimonials as initialTestimonials, initialServiceCategories, initialServices } from "@/lib/data";
+
+const { firestore } = initializeFirebase();
 
 async function batchWrite(collectionName: string, data: any[]) {
     const batch = firestore.batch();
