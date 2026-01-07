@@ -15,7 +15,7 @@ export default function AdminPage() {
       </div>
 
       <Tabs defaultValue="services" className="w-full">
-        <TabsList className="grid w-full grid-cols-2 md:grid-cols-4">
+        <TabsList className="h-auto w-full flex-col md:h-10 md:w-auto md:inline-flex md:flex-row">
           <TabsTrigger value="services">Soins</TabsTrigger>
           <TabsTrigger value="about">Page "À Propos"</TabsTrigger>
           <TabsTrigger value="contact">Page "Contact"</TabsTrigger>
