@@ -16,13 +16,39 @@ type FirebaseInstances = {
   firestore: Firestore;
 };
 
-// Initializes Firebase and returns the app, auth, and firestore instances.
-// This function is idempotent, meaning it can be called multiple times without
-// creating new instances.
-export function initializeFirebase(): FirebaseInstances {
+let instances: FirebaseInstances;
+
+// This is a server-side only initialization function.
+// It should not be used on the client.
+// We guard against client-side usage by checking for `window`.
+export function initializeFirebaseServer(): FirebaseInstances {
+  if (typeof window !== 'undefined') {
+    throw new Error('initializeFirebaseServer() should not be used on the client');
+  }
+  if (instances) {
+    return instances;
+  }
+
   const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
   const auth = getAuth(app);
   const firestore = getFirestore(app);
 
-  return { app, auth, firestore };
+  instances = { app, auth, firestore };
+  return instances;
+}
+
+
+// Initializes Firebase and returns the app, auth, and firestore instances.
+// This function is idempotent, meaning it can be called multiple times without
+// creating new instances.
+export function initializeFirebase(): FirebaseInstances {
+  if (instances) {
+    return instances;
+  }
+  const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+  const auth = getAuth(app);
+  const firestore = getFirestore(app);
+
+  instances = { app, auth, firestore };
+  return instances;
 }
