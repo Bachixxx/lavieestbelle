@@ -5,8 +5,19 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { AboutManager } from './about-manager';
 import { ContactManager } from './contact-manager';
 import { ServicesManager } from './services-manager';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useState } from 'react';
+
+const tabs = [
+  { value: 'services', label: 'Soins' },
+  { value: 'about', label: 'Page "À Propos"' },
+  { value: 'contact', label: 'Page "Contact"' },
+  { value: 'testimonials', label: 'Témoignages' },
+];
 
 export default function AdminPage() {
+  const [activeTab, setActiveTab] = useState(tabs[0].value);
+
   return (
     <div className="container mx-auto max-w-7xl px-4 py-12 md:py-24">
       <div className="mb-8">
@@ -14,13 +25,32 @@ export default function AdminPage() {
         <p className="mt-2 text-lg text-muted-foreground">Panneau de gestion du contenu du site.</p>
       </div>
 
-      <Tabs defaultValue="services" className="w-full">
-        <TabsList className="h-auto w-full flex-col md:h-10 md:w-auto md:inline-flex md:flex-row">
-          <TabsTrigger value="services">Soins</TabsTrigger>
-          <TabsTrigger value="about">Page "À Propos"</TabsTrigger>
-          <TabsTrigger value="contact">Page "Contact"</TabsTrigger>
-          <TabsTrigger value="testimonials">Témoignages</TabsTrigger>
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+        {/* Menu déroulant pour mobile */}
+        <div className="md:hidden mb-4">
+          <Select value={activeTab} onValueChange={setActiveTab}>
+            <SelectTrigger>
+              <SelectValue placeholder="Sélectionner une section" />
+            </SelectTrigger>
+            <SelectContent>
+              {tabs.map((tab) => (
+                <SelectItem key={tab.value} value={tab.value}>
+                  {tab.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        {/* Onglets pour écrans larges */}
+        <TabsList className="hidden md:inline-flex">
+          {tabs.map((tab) => (
+            <TabsTrigger key={tab.value} value={tab.value}>
+              {tab.label}
+            </TabsTrigger>
+          ))}
         </TabsList>
+
         <TabsContent value="about">
           <AboutManager />
         </TabsContent>
