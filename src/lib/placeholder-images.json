@@ -1,3 +1,46 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "hero-background",
+      "description": "A serene and minimalist spa-like background.",
+      "imageUrl": "https://images.unsplash.com/photo-1631277877896-4ce2b6770da5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxzcGElMjBzZXJlbmV8ZW58MHx8fHwxNzY3Nzc5OTcyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "spa serene"
+    },
+    {
+      "id": "about-portrait",
+      "description": "A professional and elegant portrait of Catherine Nussbaumer.",
+      "imageUrl": "https://images.unsplash.com/photo-1595211877493-41a4e5f236b3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxwcm9mZXNzaW9uYWwlMjBwb3J0cmFpdHxlbnwwfHx8fDE3Njc3NDk5NzJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "professional portrait"
+    },
+    {
+      "id": "service-visage",
+      "description": "Image for facial care services.",
+      "imageUrl": "https://images.unsplash.com/photo-1657757989675-a6cd679cebaf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxmYWNpYWwlMjB0cmVhdG1lbnR8ZW58MHx8fHwxNzY3NjkzMDA0fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "facial treatment"
+    },
+    {
+      "id": "service-corps",
+      "description": "Image for body care services.",
+      "imageUrl": "https://images.unsplash.com/photo-1745327883508-b6cd32e5dde5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxtYXNzYWdlJTIwdGhlcmFweXxlbnwwfHx8fDE3Njc3NDM4OTh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "massage therapy"
+    },
+    {
+      "id": "service-epilation",
+      "description": "Image for waxing services.",
+      "imageUrl": "https://images.unsplash.com/photo-1577467014381-aa7c13dbf331?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxnZW50bGUlMjB3YXhpbmd8ZW58MHx8fHwxNzY3Nzc5OTczfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "gentle waxing"
+    },
+    {
+      "id": "service-onglerie",
+      "description": "Image for nail care services.",
+      "imageUrl": "https://images.unsplash.com/photo-1762373349045-c2decd4ec3f3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxtYW5pY3VyZSUyMGVsZWdhbnR8ZW58MHx8fHwxNzY3Nzc5OTcyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "manicure elegant"
+    },
+    {
+      "id": "contact-map",
+      "description": "Placeholder image for the map in the contact section.",
+      "imageUrl": "https://images.unsplash.com/photo-1581922819941-6ab31ab79afc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxjaXR5JTIwbWFwfGVufDB8fHx8MTc2NzczNzM3NXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "city map"
+    }
+  ]
 }
