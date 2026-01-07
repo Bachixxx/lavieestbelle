@@ -1,7 +1,9 @@
+
 "use server";
 
 import { initializeFirebase } from "@/firebase/index.server";
-import { testimonials as initialTestimonials, initialServiceCategories, initialServices } from "@/lib/data";
+import { testimonials as initialTestimonials } from "@/lib/data";
+import { initialServiceCategories, initialServices } from "@/lib/initial-data";
 
 const { firestore } = initializeFirebase();
 
