@@ -18,12 +18,12 @@ export function ServicesPreview() {
             </p>
           </div>
         </div>
-        <div className="mx-auto grid grid-cols-1 gap-6 py-12 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mx-auto grid grid-cols-1 gap-6 py-12 sm:grid-cols-2 lg:grid-cols-3">
           {serviceCategories.map((category) => {
             const image = getImageById(category.imageId);
             return (
               <Card key={category.id} className="overflow-hidden transition-all hover:shadow-lg hover:-translate-y-1">
-                <Link href="/services" className="block">
+                <Link href={`/services#${category.id}`} className="block h-full flex flex-col">
                   <CardHeader className="p-0">
                     {image && (
                       <div className="aspect-w-4 aspect-h-3">
@@ -38,9 +38,9 @@ export function ServicesPreview() {
                       </div>
                     )}
                   </CardHeader>
-                  <CardContent className="p-6">
+                  <CardContent className="p-6 flex-grow flex flex-col">
                     <CardTitle className="text-xl font-bold font-headline">{category.title}</CardTitle>
-                    <CardDescription className="mt-2">{category.description}</CardDescription>
+                    <CardDescription className="mt-2 text-base line-clamp-2 flex-grow">{category.previewDescription}</CardDescription>
                   </CardContent>
                 </Link>
               </Card>

@@ -50,16 +50,17 @@ export interface ServiceCategory {
   id: 'visage' | 'corps' | 'epilation' | 'onglerie' | 'teinture' | 'coiffure';
   title: string;
   description: string;
+  previewDescription: string;
   imageId: string;
 }
 
 export const serviceCategories: ServiceCategory[] = [
-    { id: 'visage', title: 'Soins du Visage', description: 'Nous réalisons nos soins avec les produits de la gamme Matis.', imageId: 'service-visage'},
-    { id: 'corps', title: 'Soins du Corps', description: 'Des soins pour relaxer et revitaliser votre corps.', imageId: 'service-corps'},
-    { id: 'epilation', title: 'Épilation', description: 'Méthodes à la cire ou à la lumière pulsée pour une peau douce.', imageId: 'service-epilation'},
-    { id: 'onglerie', title: 'Beauté des Mains & Pieds', description: 'Sublimez vos ongles avec nos prestations de manucure.', imageId: 'service-onglerie'},
-    { id: 'teinture', title: 'Teinture Cils & Sourcils', description: 'Intensifiez votre regard avec une teinture durable.', imageId: 'service-teinture'},
-    { id: 'coiffure', title: 'Coiffure', description: 'Coupes, couleurs et soins pour dames, messieurs et enfants.', imageId: 'service-coiffure'},
+    { id: 'visage', title: 'Soins du Visage', description: 'Nous réalisons nos soins avec les produits de la gamme Matis.', previewDescription: 'Soins personnalisés pour révéler l\'éclat de votre peau.', imageId: 'service-visage'},
+    { id: 'corps', title: 'Soins du Corps', description: 'Des soins pour relaxer et revitaliser votre corps.', previewDescription: 'Des soins pour relaxer et revitaliser votre corps.', imageId: 'service-corps'},
+    { id: 'epilation', title: 'Épilation', description: 'Méthodes à la cire ou à la lumière pulsée pour une peau douce.', previewDescription: 'Méthodes à la cire ou à la lumière pulsée pour une peau douce.', imageId: 'service-epilation'},
+    { id: 'onglerie', title: 'Beauté des Mains & Pieds', description: 'Sublimez vos ongles avec nos prestations de manucure.', previewDescription: 'Sublimez vos ongles avec nos prestations de manucure.', imageId: 'service-onglerie'},
+    { id: 'teinture', title: 'Teinture Cils & Sourcils', description: 'Intensifiez votre regard avec une teinture durable.', previewDescription: 'Intensifiez votre regard avec une teinture durable.', imageId: 'service-teinture'},
+    { id: 'coiffure', title: 'Coiffure', description: 'Coupes, couleurs et soins pour dames, messieurs et enfants.', previewDescription: 'Coupes, couleurs et soins pour toute la famille.', imageId: 'service-coiffure'},
 ]
 
 export const getImageById = (id: string): ImagePlaceholder | undefined => {
