@@ -4,13 +4,16 @@
 import { initializeFirebase } from "@/firebase/index.server";
 import { testimonials as initialTestimonials } from "@/lib/data";
 import { initialServiceCategories, initialServices } from "@/lib/initial-data";
+import { writeBatch, doc, collection } from "firebase/firestore";
 
 const { firestore } = initializeFirebase();
 
 async function batchWrite(collectionName: string, data: any[]) {
-    const batch = firestore.batch();
+    const batch = writeBatch(firestore);
+    const collectionRef = collection(firestore, collectionName);
+
     data.forEach((item) => {
-        const docRef = firestore.collection(collectionName).doc(item.id);
+        const docRef = doc(collectionRef, item.id);
         batch.set(docRef, item);
     });
     await batch.commit();
