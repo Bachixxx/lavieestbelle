@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { AboutManager } from './about-manager';
 import { ContactManager } from './contact-manager';
+import { ServicesManager } from './services-manager';
 
 export default function AdminPage() {
   return (
@@ -13,11 +14,11 @@ export default function AdminPage() {
         <p className="mt-2 text-lg text-muted-foreground">Panneau de gestion du contenu du site.</p>
       </div>
 
-      <Tabs defaultValue="about" className="w-full">
+      <Tabs defaultValue="services" className="w-full">
         <TabsList className="grid w-full grid-cols-2 md:grid-cols-4">
+          <TabsTrigger value="services">Soins</TabsTrigger>
           <TabsTrigger value="about">Page "À Propos"</TabsTrigger>
           <TabsTrigger value="contact">Page "Contact"</TabsTrigger>
-          <TabsTrigger value="services">Soins</TabsTrigger>
           <TabsTrigger value="testimonials">Témoignages</TabsTrigger>
         </TabsList>
         <TabsContent value="about">
@@ -27,15 +28,7 @@ export default function AdminPage() {
           <ContactManager />
         </TabsContent>
         <TabsContent value="services">
-          <Card>
-            <CardHeader>
-              <CardTitle>Gestion des Soins</CardTitle>
-              <CardDescription>Ajoutez, modifiez ou supprimez des soins et des catégories.</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p>En construction...</p>
-            </CardContent>
-          </Card>
+          <ServicesManager />
         </TabsContent>
         <TabsContent value="testimonials">
           <Card>

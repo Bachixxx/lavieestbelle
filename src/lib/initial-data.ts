@@ -1,4 +1,9 @@
-
+export const initialTestimonials = [
+    { id: 't1', text: 'Un moment de pure détente. Catherine est d\'un professionnalisme et d\'une douceur incroyables. Je recommande vivement !', author: 'Marie D.', rating: 5 },
+    { id: 't2', text: 'Le meilleur soin du visage que j\'ai jamais eu. Ma peau est transformée. L\'institut est un havre de paix.', author: 'Sophie L.', rating: 5 },
+    { id: 't3', text: 'Un service impeccable et une hygiène irréprochable. Je suis fidèle depuis des années et je ne suis jamais déçue.', author: 'Isabelle F.', rating: 5 },
+    { id: 't4', text: 'La manucure semi-permanente est parfaite et tient très longtemps. L\'accueil est toujours chaleureux.', author: 'Laura P.', rating: 5 },
+];
 
 export const initialServiceCategories = [
     { id: 'visage', title: 'Soins du Visage', description: 'Des soins experts pour révéler la beauté naturelle de votre peau.', previewDescription: 'Soins experts pour une peau éclatante et saine.', imageId: 'service-visage' },

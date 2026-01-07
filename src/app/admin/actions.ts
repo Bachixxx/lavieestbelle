@@ -2,8 +2,9 @@
 "use server";
 
 import { initializeFirebase } from "@/firebase/index.server";
-import { setDoc, doc } from "firebase/firestore";
+import { setDoc, doc, addDoc, collection, updateDoc, deleteDoc } from "firebase/firestore";
 import * as z from "zod";
+import { revalidatePath } from "next/cache";
 
 const { firestore } = initializeFirebase();
 
@@ -28,6 +29,8 @@ export async function updateAboutContent(values: z.infer<typeof aboutContentSche
     try {
         const docRef = doc(firestore, "aboutContent", "content");
         await setDoc(docRef, validatedFields.data, { merge: true });
+        revalidatePath("/about");
+        revalidatePath("/admin");
         return { success: true };
     } catch (error: any) {
         console.error("Erreur lors de la mise à jour du contenu 'À Propos': ", error);
@@ -56,9 +59,62 @@ export async function updateContactInfo(values: z.infer<typeof contactInfoSchema
     try {
         const docRef = doc(firestore, "contactInfo", "info");
         await setDoc(docRef, validatedFields.data, { merge: true });
+        revalidatePath("/contact");
+        revalidatePath("/admin");
         return { success: true };
     } catch (error: any) {
         console.error("Erreur lors de la mise à jour des informations de contact: ", error);
+        return { success: false, error: error.message };
+    }
+}
+
+// Schéma de validation pour un soin
+export const serviceSchema = z.object({
+    name: z.string().min(1, "Le nom est requis"),
+    description: z.string().optional(),
+    price: z.string().optional(),
+    duration: z.string().optional(),
+    category: z.string().min(1, "La catégorie est requise"),
+});
+
+export async function addService(values: z.infer<typeof serviceSchema>) {
+    const validatedFields = serviceSchema.safeParse(values);
+    if (!validatedFields.success) {
+        return { success: false, error: "Champs invalides" };
+    }
+    try {
+        await addDoc(collection(firestore, "services"), validatedFields.data);
+        revalidatePath("/services");
+        revalidatePath("/admin");
+        return { success: true };
+    } catch (error: any) {
+        return { success: false, error: error.message };
+    }
+}
+
+export async function updateService(id: string, values: z.infer<typeof serviceSchema>) {
+    const validatedFields = serviceSchema.safeParse(values);
+    if (!validatedFields.success) {
+        return { success: false, error: "Champs invalides" };
+    }
+    try {
+        const docRef = doc(firestore, "services", id);
+        await updateDoc(docRef, validatedFields.data);
+        revalidatePath("/services");
+        revalidatePath("/admin");
+        return { success: true };
+    } catch (error: any) {
+        return { success: false, error: error.message };
+    }
+}
+
+export async function deleteService(id: string) {
+    try {
+        await deleteDoc(doc(firestore, "services", id));
+        revalidatePath("/services");
+        revalidatePath("/admin");
+        return { success: true };
+    } catch (error: any) {
         return { success: false, error: error.message };
     }
 }
