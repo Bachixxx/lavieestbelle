@@ -7,10 +7,11 @@
 
 // Replace this with your own Firebase configuration
 export const firebaseConfig = {
-  apiKey: "API_KEY",
-  authDomain: "PROJECT_ID.firebaseapp.com",
-  projectId: "PROJECT_ID",
-  storageBucket: "PROJECT_ID.appspot.com",
-  messagingSenderId: "SENDER_ID",
-  appId: "APP_ID",
+  apiKey: "AIzaSyD5FHGu8eUHuGlrKONRbBgQULtxokWESdc",
+  authDomain: "la-vie-est-belle-193e5.firebaseapp.com",
+  projectId: "la-vie-est-belle-193e5",
+  storageBucket: "la-vie-est-belle-193e5.appspot.com",
+  messagingSenderId: "154658692888",
+  appId: "1:154658692888:web:f6b2ef38326c6d4776086d",
+  measurementId: "G-S4ES6HWQGK"
 };
