@@ -1,6 +1,10 @@
+'use client';
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { serviceCategories, services, type Service } from "@/lib/data";
+import type { Service, ServiceCategory } from "@/lib/data";
+import { useCollection } from "@/firebase";
+import { Skeleton } from "@/components/ui/skeleton";
 
 function ServiceItem({ service }: { service: Service }) {
   return (
@@ -17,7 +21,34 @@ function ServiceItem({ service }: { service: Service }) {
   )
 }
 
+function ServiceCategorySkeleton() {
+    return (
+        <Card className="shadow-lg overflow-hidden">
+            <CardHeader>
+                <Skeleton className="h-8 w-1/2" />
+                <Skeleton className="h-4 w-3/4 mt-2" />
+            </CardHeader>
+            <CardContent className="space-y-6">
+                <div className="space-y-4">
+                    <Skeleton className="h-5 w-3/4" />
+                    <Skeleton className="h-4 w-full" />
+                </div>
+                <Separator />
+                <div className="space-y-4">
+                    <Skeleton className="h-5 w-2/3" />
+                    <Skeleton className="h-4 w-5/6" />
+                </div>
+            </CardContent>
+        </Card>
+    )
+}
+
 export default function ServicesPage() {
+  const { data: serviceCategories, loading: loadingCategories } = useCollection<ServiceCategory>('serviceCategories');
+  const { data: services, loading: loadingServices } = useCollection<Service>('services');
+
+  const isLoading = loadingCategories || loadingServices;
+
   return (
     <div className="bg-background">
       <div className="container mx-auto max-w-7xl px-4 py-12 md:py-24">
@@ -31,7 +62,14 @@ export default function ServicesPage() {
         </div>
 
         <div className="space-y-16">
-          {serviceCategories.map((category) => {
+          {isLoading && (
+            <>
+              <ServiceCategorySkeleton />
+              <ServiceCategorySkeleton />
+            </>
+          )}
+
+          {!isLoading && serviceCategories && services && serviceCategories.map((category) => {
             const categoryServices = services.filter(s => s.category === category.id);
             if (categoryServices.length === 0) return null;
 

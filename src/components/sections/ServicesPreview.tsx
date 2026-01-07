@@ -1,12 +1,33 @@
+'use client';
+
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { serviceCategories, getImageById } from "@/lib/data";
+import { getImageById, type ServiceCategory } from "@/lib/data";
 import { Button } from "../ui/button";
+import { useCollection } from "@/firebase";
+import { Skeleton } from "../ui/skeleton";
+
+function ServicePreviewSkeleton() {
+    return (
+        <Card className="overflow-hidden flex flex-col">
+            <div className="relative aspect-[4/3] bg-muted">
+                <Skeleton className="h-full w-full"/>
+            </div>
+            <CardContent className="p-6 flex-grow flex flex-col">
+                <Skeleton className="h-6 w-2/3" />
+                <Skeleton className="h-4 w-full mt-3" />
+                <Skeleton className="h-4 w-4/5 mt-1" />
+            </CardContent>
+        </Card>
+    )
+}
 
 export function ServicesPreview() {
+  const { data: serviceCategories, loading } = useCollection<ServiceCategory>('serviceCategories');
+
   return (
     <section className="w-full py-12 md:py-24 lg:py-32 bg-background">
       <div className="container mx-auto px-4 md:px-6">
@@ -19,14 +40,21 @@ export function ServicesPreview() {
           </div>
         </div>
         <div className="mx-auto grid grid-cols-1 gap-6 py-12 sm:grid-cols-2 lg:grid-cols-3">
-          {serviceCategories.map((category) => {
+          {loading && (
+            <>
+              <ServicePreviewSkeleton />
+              <ServicePreviewSkeleton />
+              <ServicePreviewSkeleton />
+            </>
+          )}
+          {!loading && serviceCategories?.map((category) => {
             const image = getImageById(category.imageId);
             return (
               <Card key={category.id} className="overflow-hidden transition-all hover:shadow-lg hover:-translate-y-1 flex flex-col">
                 <Link href={`/services#${category.id}`} className="block h-full flex flex-col">
                   <CardHeader className="p-0">
                     {image && (
-                      <div className="relative aspect-[4/3]">
+                      <div className="relative aspect-square">
                         <Image
                           src={image.imageUrl}
                           alt={image.description}

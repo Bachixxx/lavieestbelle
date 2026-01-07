@@ -1,4 +1,7 @@
-import { services } from "@/lib/data";
+'use client';
+import { useCollection } from "@/firebase";
+import { type Service } from "@/lib/data";
+
 import {
   Table,
   TableBody,
@@ -10,8 +13,24 @@ import {
 import { Button } from "@/components/ui/button";
 import { Edit, Trash2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
+
+function AdminTableRowSkeleton() {
+    return (
+        <TableRow>
+            <TableCell><Skeleton className="h-5 w-48" /></TableCell>
+            <TableCell><Skeleton className="h-5 w-24" /></TableCell>
+            <TableCell><Skeleton className="h-5 w-16" /></TableCell>
+            <TableCell><Skeleton className="h-5 w-16" /></TableCell>
+            <TableCell className="text-right"><Skeleton className="h-8 w-20 ml-auto" /></TableCell>
+        </TableRow>
+    )
+}
+
 
 export default function AdminPage() {
+    const { data: services, loading } = useCollection<Service>('services');
+
   return (
     <div className="container mx-auto max-w-7xl px-4 py-12 md:py-24">
       <div className="mb-8">
@@ -35,7 +54,15 @@ export default function AdminPage() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {services.map((service) => (
+            {loading && (
+                <>
+                    <AdminTableRowSkeleton />
+                    <AdminTableRowSkeleton />
+                    <AdminTableRowSkeleton />
+                    <AdminTableRowSkeleton />
+                </>
+            )}
+            {services?.map((service) => (
               <TableRow key={service.id}>
                 <TableCell className="font-medium">{service.name}</TableCell>
                 <TableCell><Badge variant="secondary" className="capitalize">{service.category}</Badge></TableCell>
