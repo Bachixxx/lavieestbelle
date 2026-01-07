@@ -18,7 +18,6 @@ const aboutContentSchema = z.object({
     conclusion: z.string().min(1, "La conclusion est requise"),
 });
 
-
 export async function updateAboutContent(values: z.infer<typeof aboutContentSchema>) {
     const validatedFields = aboutContentSchema.safeParse(values);
 
@@ -28,11 +27,38 @@ export async function updateAboutContent(values: z.infer<typeof aboutContentSche
 
     try {
         const docRef = doc(firestore, "aboutContent", "content");
-        // On ne met pas à jour l'ID et l'imageId qui sont statiques
         await setDoc(docRef, validatedFields.data, { merge: true });
         return { success: true };
     } catch (error: any) {
         console.error("Erreur lors de la mise à jour du contenu 'À Propos': ", error);
+        return { success: false, error: error.message };
+    }
+}
+
+// Schéma de validation pour le formulaire "Contact"
+const contactInfoSchema = z.object({
+    address: z.string().min(1, "L'adresse est requise"),
+    phone: z.string().min(1, "Le téléphone est requis"),
+    openingHours: z.object({
+        weekdays: z.string().min(1, "Les horaires de la semaine sont requis"),
+        saturday: z.string().min(1, "Les horaires du samedi sont requis"),
+        sunday: z.string().min(1, "Les horaires du dimanche sont requis"),
+    }),
+});
+
+export async function updateContactInfo(values: z.infer<typeof contactInfoSchema>) {
+    const validatedFields = contactInfoSchema.safeParse(values);
+
+    if (!validatedFields.success) {
+        return { success: false, error: "Champs invalides" };
+    }
+
+    try {
+        const docRef = doc(firestore, "contactInfo", "info");
+        await setDoc(docRef, validatedFields.data, { merge: true });
+        return { success: true };
+    } catch (error: any) {
+        console.error("Erreur lors de la mise à jour des informations de contact: ", error);
         return { success: false, error: error.message };
     }
 }

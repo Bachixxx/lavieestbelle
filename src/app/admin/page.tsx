@@ -3,6 +3,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { AboutManager } from './about-manager';
+import { ContactManager } from './contact-manager';
 
 export default function AdminPage() {
   return (
@@ -23,15 +24,7 @@ export default function AdminPage() {
           <AboutManager />
         </TabsContent>
         <TabsContent value="contact">
-          <Card>
-            <CardHeader>
-              <CardTitle>Gestion de la page "Contact"</CardTitle>
-              <CardDescription>Modifiez ici les informations de contact et les horaires.</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p>En construction...</p>
-            </CardContent>
-          </Card>
+          <ContactManager />
         </TabsContent>
         <TabsContent value="services">
           <Card>
