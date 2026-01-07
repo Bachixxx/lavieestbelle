@@ -37,6 +37,18 @@
       "imageHint": "manicure elegant"
     },
     {
+      "id": "service-teinture",
+      "description": "Image for eyelash and eyebrow tinting.",
+      "imageUrl": "https://images.unsplash.com/photo-1761169563770-c6b8e61eb57a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxleWVicm93JTIwdGludGluZ3xlbnwwfHx8fDE3Njc3ODk1MTl8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "eyebrow tinting"
+    },
+    {
+      "id": "service-coiffure",
+      "description": "Image for hair care services.",
+      "imageUrl": "https://images.unsplash.com/photo-1580618672591-eb180b1a973f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxoYWlyJTIwc2Fsb258ZW58MHx8fHwxNzY3Nzc1MTA4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "hair salon"
+    },
+    {
       "id": "contact-map",
       "description": "Placeholder image for the map in the contact section.",
       "imageUrl": "https://images.unsplash.com/photo-1581922819941-6ab31ab79afc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxjaXR5JTIwbWFwfGVufDB8fHx8MTc2NzczNzM3NXww&ixlib=rb-4.1.0&q=80&w=1080",

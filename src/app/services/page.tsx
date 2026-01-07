@@ -10,7 +10,7 @@ function ServiceItem({ service }: { service: Service }) {
         {service.description && <p className="text-sm text-muted-foreground mt-1">{service.description}</p>}
       </div>
       <div className="text-right flex-shrink-0">
-        <p className="font-semibold text-primary">{service.price}</p>
+        {service.price && <p className="font-semibold text-primary">{service.price}</p>}
         {service.duration && <p className="text-sm text-muted-foreground">{service.duration}</p>}
       </div>
     </div>
@@ -33,6 +33,8 @@ export default function ServicesPage() {
         <div className="space-y-16">
           {serviceCategories.map((category) => {
             const categoryServices = services.filter(s => s.category === category.id);
+            if (categoryServices.length === 0) return null;
+
             return (
               <section key={category.id} id={category.id}>
                 <Card className="shadow-lg overflow-hidden">
