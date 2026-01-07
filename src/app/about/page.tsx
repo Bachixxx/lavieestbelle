@@ -11,14 +11,15 @@ export default function AboutPage() {
       <div className="container mx-auto max-w-7xl px-4">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold tracking-tight sm:text-6xl font-headline text-primary">
-            Notre Philosophie, Votre Bien-être
+            Notre Histoire, Votre Bien-être
           </h1>
-          <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
-            Au-delà du soin, une expertise unique au service de votre peau.
+          <p className="mt-4 max-w-3xl mx-auto text-lg text-muted-foreground">
+            L&apos;institut de beauté La Vie est Belle a ouvert ses portes à Bellevue le 7 octobre 2016.
+            Nous offrons des soins de beauté du visage, du corps ainsi que des cheveux tant pour les dames que pour les messieurs.
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-5 gap-12 items-center">
+        <div className="grid lg:grid-cols-5 gap-12 items-start">
             <div className="lg:col-span-2 relative h-full min-h-[400px] lg:min-h-[600px] rounded-lg overflow-hidden shadow-xl">
             {aboutImage && (
                 <Image
@@ -32,19 +33,23 @@ export default function AboutPage() {
             )}
             </div>
 
-            <div className="lg:col-span-3 space-y-6 text-lg text-foreground/80">
-                <h2 className="text-3xl font-bold font-headline text-primary/90">Catherine Nussbaumer</h2>
-                <p>
-                Passionnée par la beauté et la santé de la peau, Catherine Nussbaumer a fondé l&apos;institut "La Vie est Belle" avec une vision claire : offrir une expérience où l&apos;expertise cosmétique rencontre la rigueur scientifique.
-                </p>
-                <p>
-                Titulaire d&apos;un <strong>CFC d&apos;esthéticienne</strong>, elle maîtrise parfaitement les techniques de soin les plus avancées. Mais ce qui la distingue véritablement, c&apos;est son parcours complémentaire en <strong>pharmacie</strong>. Cette double compétence lui confère une compréhension approfondie de la biologie de la peau et des actifs cosmétiques.
-                </p>
-                <p>
-                Cette approche holistique garantit des protocoles de soins non seulement relaxants et agréables, mais aussi hautement efficaces et sécuritaires. Chaque prestation est personnalisée après un diagnostic précis, en utilisant des produits de haute qualité, rigoureusement sélectionnés pour leur performance et leur innocuité.
-                </p>
-                <p className="font-semibold text-foreground">
-                Confiez votre peau à une experte qui saura en révéler toute la beauté et la santé.
+            <div className="lg:col-span-3 space-y-10 text-lg text-foreground/80">
+                <div className="space-y-4">
+                    <h2 className="text-3xl font-bold font-headline text-primary/90">Catherine Nussbaumer - Directrice & Esthéticienne</h2>
+                    <p>
+                    Catherine a achevé un CFC d&apos;assistante en pharmacie en 2000 pour ensuite réaliser des études en esthétique. Après avoir travaillé 10 ans dans un salon privé, elle a décidé de se lancer comme indépendante et a ouvert son institut à Bellevue.
+                    </p>
+                </div>
+
+                <div className="space-y-4">
+                    <h2 className="text-3xl font-bold font-headline text-primary/90">Sonia - Spécialiste Coiffure</h2>
+                    <p>
+                    Sonia, sa collaboratrice, est au bénéfice d&apos;une expérience de plus de 25 ans dans le domaine de la coiffure et est spécialisée dans les soins du cheveu.
+                    </p>
+                </div>
+
+                <p className="font-semibold text-foreground text-xl pt-4">
+                Vous y serez toujours bien accueillis et reçus avec bienveillance pour recevoir les meilleurs conseils en matière de bien-être et de soins esthétiques.
                 </p>
                 <div className="pt-4">
                     <Button asChild size="lg">
