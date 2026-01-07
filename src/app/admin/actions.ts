@@ -3,7 +3,7 @@
 
 import { initializeFirebase } from "@/firebase/index.server";
 import { testimonials as initialTestimonials } from "@/lib/data";
-import { initialServiceCategories, initialServices, initialAboutContent } from "@/lib/initial-data";
+import { initialServiceCategories, initialServices, initialAboutContent, initialContactInfo } from "@/lib/initial-data";
 import { writeBatch, doc, collection, setDoc } from "firebase/firestore";
 
 const { firestore } = initializeFirebase();
@@ -52,3 +52,15 @@ export async function populateAboutContent() {
     return { success: false, error: error.message };
   }
 }
+
+export async function populateContactInfo() {
+    try {
+      const docRef = doc(firestore, "contactInfo", initialContactInfo.id);
+      await setDoc(docRef, initialContactInfo);
+      return { success: true };
+    } catch (error: any) {
+      console.error("Error populating contact info: ", error);
+      return { success: false, error: error.message };
+    }
+  }
+

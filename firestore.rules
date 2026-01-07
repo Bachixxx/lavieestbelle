@@ -27,5 +27,10 @@ service cloud.firestore {
       allow read: if true;
       allow write: if isAdmin();
     }
+
+    match /contactInfo/{document=**} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
   }
 }

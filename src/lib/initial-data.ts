@@ -1,4 +1,5 @@
 
+
 export const initialServiceCategories = [
     { id: 'visage', title: 'Soins du Visage', description: 'Des soins experts pour révéler la beauté naturelle de votre peau.', previewDescription: 'Soins experts pour une peau éclatante et saine.', imageId: 'service-visage' },
     { id: 'corps', title: 'Soins du Corps', description: 'Des rituels de bien-être pour une relaxation profonde et une peau sublimée.', previewDescription: 'Rituels de bien-être pour une relaxation profonde.', imageId: 'service-corps' },
@@ -53,4 +54,15 @@ export const initialAboutContent = {
     soniaText: 'Sonia, sa collaboratrice, est au bénéfice d\'une expérience de plus de 25 ans dans le domaine de la coiffure et est spécialisée dans les soins du cheveu.',
     conclusion: 'Vous y serez toujours bien accueillis et reçus avec bienveillance pour recevoir les meilleurs conseils en matière de bien-être et de soins esthétiques.',
     imageId: 'about-portrait',
+};
+
+export const initialContactInfo = {
+    id: 'info',
+    address: 'Chemin des Vignes 12, 1293 Bellevue, Suisse',
+    phone: '+41 22 777 77 77',
+    openingHours: {
+        weekdays: '9h00 - 18h30',
+        saturday: '9h00 - 17h00',
+        sunday: 'Fermé'
+    }
 };

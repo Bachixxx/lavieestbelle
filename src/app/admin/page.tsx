@@ -4,13 +4,14 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
-import { populateDatabase, populateTestimonials, populateAboutContent } from './actions';
+import { populateDatabase, populateTestimonials, populateAboutContent, populateContactInfo } from './actions';
 
 export default function AdminPage() {
   const { toast } = useToast();
   const [isPopulating, setIsPopulating] = useState(false);
   const [isTestimonialPopulating, setIsTestimonialPopulating] = useState(false);
   const [isAboutPopulating, setIsAboutPopulating] = useState(false);
+  const [isContactPopulating, setIsContactPopulating] = useState(false);
 
   const handlePopulate = async () => {
     setIsPopulating(true);
@@ -84,6 +85,30 @@ export default function AdminPage() {
     }
   };
 
+  const handlePopulateContact = async () => {
+    setIsContactPopulating(true);
+    try {
+      const result = await populateContactInfo();
+      if (result.success) {
+        toast({
+          title: 'Succès',
+          description: 'Les informations de la page "Contact" ont été ajoutées à la base de données.',
+        });
+      } else {
+        throw new Error(result.error || 'Une erreur inconnue est survenue.');
+      }
+    } catch (error: any) {
+      console.error(error);
+      toast({
+        variant: 'destructive',
+        title: 'Erreur',
+        description: `Une erreur est survenue lors de l'ajout des informations : ${error.message}`,
+      });
+    } finally {
+      setIsContactPopulating(false);
+    }
+  };
+
   return (
     <div className="container mx-auto max-w-4xl px-4 py-12 md:py-24">
       <div className="mb-8">
@@ -109,6 +134,9 @@ export default function AdminPage() {
             </Button>
             <Button onClick={handlePopulateAbout} disabled={isAboutPopulating}>
               {isAboutPopulating ? 'Initialisation en cours...' : 'Initialiser la page "À Propos"'}
+            </Button>
+            <Button onClick={handlePopulateContact} disabled={isContactPopulating}>
+              {isContactPopulating ? 'Initialisation en cours...' : 'Initialiser la page "Contact"'}
             </Button>
           </CardContent>
         </Card>
