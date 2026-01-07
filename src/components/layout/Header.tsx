@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { Menu, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { navLinks } from '@/lib/data';
 import { useState } from 'react';
 
@@ -42,10 +42,14 @@ export function Header() {
               </Button>
             </SheetTrigger>
             <SheetContent side="right">
+              <SheetHeader>
+                <SheetTitle>
+                  <Link href="/" className="font-headline text-xl font-bold text-primary" onClick={() => setIsOpen(false)}>
+                    La Vie est Belle
+                  </Link>
+                </SheetTitle>
+              </SheetHeader>
               <div className="flex flex-col gap-6 p-6">
-                <Link href="/" className="font-headline text-xl font-bold text-primary" onClick={() => setIsOpen(false)}>
-                  La Vie est Belle
-                </Link>
                 <nav className="flex flex-col gap-4">
                   {navLinks.map((link) => (
                     <Link
