@@ -2,65 +2,37 @@
 "use server";
 
 import { initializeFirebase } from "@/firebase/index.server";
-import { testimonials as initialTestimonials } from "@/lib/data";
-import { initialServiceCategories, initialServices, initialAboutContent, initialContactInfo } from "@/lib/initial-data";
-import { writeBatch, doc, collection, setDoc } from "firebase/firestore";
+import { setDoc, doc } from "firebase/firestore";
+import * as z from "zod";
 
 const { firestore } = initializeFirebase();
 
-async function batchWrite(collectionName: string, data: any[]) {
-    const batch = writeBatch(firestore);
-    const collectionRef = collection(firestore, collectionName);
+// Schéma de validation pour le formulaire "À Propos"
+const aboutContentSchema = z.object({
+    title: z.string().min(1, "Le titre est requis"),
+    subtitle: z.string().min(1, "Le sous-titre est requis"),
+    catherineTitle: z.string().min(1, "Le titre pour Catherine est requis"),
+    catherineText: z.string().min(1, "Le texte pour Catherine est requis"),
+    soniaTitle: z.string().min(1, "Le titre pour Sonia est requis"),
+    soniaText: z.string().min(1, "Le texte pour Sonia est requis"),
+    conclusion: z.string().min(1, "La conclusion est requise"),
+});
 
-    data.forEach((item) => {
-        const docRef = doc(collectionRef, item.id);
-        batch.set(docRef, item);
-    });
-    await batch.commit();
-}
 
+export async function updateAboutContent(values: z.infer<typeof aboutContentSchema>) {
+    const validatedFields = aboutContentSchema.safeParse(values);
 
-export async function populateDatabase() {
-  try {
-    await batchWrite('serviceCategories', initialServiceCategories);
-    await batchWrite('services', initialServices);
-    
-    return { success: true };
-  } catch (error: any) {
-    console.error("Error populating database: ", error);
-    return { success: false, error: error.message };
-  }
-}
-
-export async function populateTestimonials() {
-  try {
-    await batchWrite('testimonials', initialTestimonials);
-    return { success: true };
-  } catch (error: any) {
-    console.error("Error populating testimonials: ", error);
-    return { success: false, error: error.message };
-  }
-}
-
-export async function populateAboutContent() {
-  try {
-    const docRef = doc(firestore, "aboutContent", initialAboutContent.id);
-    await setDoc(docRef, initialAboutContent);
-    return { success: true };
-  } catch (error: any) {
-    console.error("Error populating about content: ", error);
-    return { success: false, error: error.message };
-  }
-}
-
-export async function populateContactInfo() {
-    try {
-      const docRef = doc(firestore, "contactInfo", initialContactInfo.id);
-      await setDoc(docRef, initialContactInfo);
-      return { success: true };
-    } catch (error: any) {
-      console.error("Error populating contact info: ", error);
-      return { success: false, error: error.message };
+    if (!validatedFields.success) {
+        return { success: false, error: "Champs invalides" };
     }
-  }
 
+    try {
+        const docRef = doc(firestore, "aboutContent", "content");
+        // On ne met pas à jour l'ID et l'imageId qui sont statiques
+        await setDoc(docRef, validatedFields.data, { merge: true });
+        return { success: true };
+    } catch (error: any) {
+        console.error("Erreur lors de la mise à jour du contenu 'À Propos': ", error);
+        return { success: false, error: error.message };
+    }
+}
