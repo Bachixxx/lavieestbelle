@@ -8,34 +8,57 @@ export function AboutPreview() {
   const aboutImage = getImageById('about-portrait');
 
   return (
-    <section className="w-full py-12 md:py-24 lg:py-32 bg-muted/50">
-      <div className="container mx-auto grid items-center gap-10 px-4 md:px-6 lg:grid-cols-2 lg:gap-16">
-        <div className="relative h-full min-h-[400px] lg:min-h-[500px] rounded-lg overflow-hidden shadow-lg">
-          {aboutImage && (
-            <Image
-              src={aboutImage.imageUrl}
-              alt={aboutImage.description}
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, 50vw"
-              data-ai-hint={aboutImage.imageHint}
-            />
-          )}
-        </div>
-        <div className="space-y-4">
-          <div className="inline-block rounded-lg bg-secondary px-3 py-1 text-sm text-secondary-foreground">
-            Notre Expertise
+    <section className="w-full py-24 md:py-32 bg-secondary/20 relative overflow-hidden">
+      {/* Decorative background element */}
+      <div className="absolute top-0 right-0 w-1/3 h-full bg-secondary/30 -skew-x-12 translate-x-1/2 pointer-events-none" />
+
+      <div className="container mx-auto px-4 md:px-6 relative">
+        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-24">
+          {/* Image Side */}
+          <div className="relative w-full lg:w-1/2 order-2 lg:order-1">
+            <div className="relative aspect-[3/4] md:aspect-[4/3] lg:aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl">
+              {aboutImage && (
+                <Image
+                  src={aboutImage.imageUrl}
+                  alt={aboutImage.description}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  data-ai-hint={aboutImage.imageHint}
+                />
+              )}
+            </div>
+            {/* Floating Badge */}
+            <div className="absolute -bottom-6 -right-6 md:bottom-10 md:-right-10 bg-white p-6 shadow-xl rounded-xl max-w-[200px] hidden md:block">
+              <p className="font-heading text-4xl text-primary font-bold">15+</p>
+              <p className="text-sm text-muted-foreground uppercase tracking-wider font-medium mt-1">Années d&apos;expérience</p>
+            </div>
           </div>
-          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl font-headline text-primary">
-            Catherine Nussbaumer
-          </h2>
-          <p className="max-w-[600px] text-foreground/80 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-            Forte d&apos;une double compétence avec un CFC d&apos;esthéticienne et une solide expérience en pharmacie, Catherine vous offre une approche du soin unique, alliant expertise scientifique et savoir-faire esthétique.
-          </p>
-          <div className="flex flex-col gap-2 min-[400px]:flex-row">
-            <Button asChild size="lg">
-              <Link href="/about">En savoir plus</Link>
-            </Button>
+
+          {/* Content Side */}
+          <div className="w-full lg:w-1/2 order-1 lg:order-2 space-y-8">
+            <div className="inline-block border border-primary/30 rounded-full px-4 py-1.5 text-sm font-medium text-primary tracking-wide uppercase bg-primary/5">
+              Notre Expertise
+            </div>
+
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-heading text-foreground leading-tight">
+              Catherine Nussbaumer
+            </h2>
+
+            <div className="space-y-6 text-lg text-muted-foreground leading-relaxed">
+              <p>
+                Forte d&apos;une double compétence avec un CFC d&apos;esthéticienne et une solide expérience en pharmacie, Catherine vous offre une approche du soin unique.
+              </p>
+              <p>
+                Son expertise scientifique se marie à un savoir-faire esthétique précis pour des résultats visibles et durables, dans une atmosphère de bienveillance absolue.
+              </p>
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-4 pt-4">
+              <Button asChild size="lg" className="rounded-full px-8">
+                <Link href="/about">Rencontrer Catherine</Link>
+              </Button>
+            </div>
           </div>
         </div>
       </div>

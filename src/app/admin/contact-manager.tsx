@@ -69,7 +69,7 @@ export function ContactManager() {
             }
         }
     });
-    
+
     useEffect(() => {
         if (content) {
             form.reset(content);
@@ -95,95 +95,94 @@ export function ContactManager() {
     if (loading) {
         return <ContactManagerSkeleton />;
     }
-    
-    return (
-        <Card>
-            <CardHeader>
-              <CardTitle>Gestion de la page "Contact"</CardTitle>
-              <CardDescription>Modifiez ici les informations de contact et les horaires.</CardDescription>
-            </CardHeader>
-            <CardContent>
-                <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                        <FormField
-                            control={form.control}
-                            name="address"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Adresse</FormLabel>
-                                    <FormControl>
-                                        <Input {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="phone"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Téléphone</FormLabel>
-                                    <FormControl>
-                                        <Input {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <Card>
-                            <CardHeader>
-                                <CardTitle className="text-lg">Horaires d'ouverture</CardTitle>
-                            </CardHeader>
-                            <CardContent className="space-y-4">
-                                <FormField
-                                    control={form.control}
-                                    name="openingHours.weekdays"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel>Lundi - Vendredi</FormLabel>
-                                            <FormControl>
-                                                <Input {...field} />
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-                                <FormField
-                                    control={form.control}
-                                    name="openingHours.saturday"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel>Samedi</FormLabel>
-                                            <FormControl>
-                                                <Input {...field} />
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-                                <FormField
-                                    control={form.control}
-                                    name="openingHours.sunday"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel>Dimanche</FormLabel>
-                                            <FormControl>
-                                                <Input {...field} />
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-                            </CardContent>
-                        </Card>
 
-                        <Button type="submit" disabled={form.formState.isSubmitting || !form.formState.isDirty}>
-                            {form.formState.isSubmitting ? "Enregistrement..." : "Enregistrer les modifications"}
-                        </Button>
-                    </form>
-                </Form>
-            </CardContent>
-        </Card>
+    return (
+        <div className="space-y-6">
+            <div className="flex flex-col gap-2">
+                <h2 className="text-2xl font-heading font-bold text-primary">Gestion de la page "Contact"</h2>
+                <p className="text-muted-foreground">Modifiez ici les informations de contact et les horaires.</p>
+            </div>
+
+            <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                    <FormField
+                        control={form.control}
+                        name="address"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Adresse</FormLabel>
+                                <FormControl>
+                                    <Input {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="phone"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Téléphone</FormLabel>
+                                <FormControl>
+                                    <Input {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <Card>
+                        <CardHeader>
+                            <CardTitle className="text-lg">Horaires d'ouverture</CardTitle>
+                        </CardHeader>
+                        <CardContent className="space-y-4">
+                            <FormField
+                                control={form.control}
+                                name="openingHours.weekdays"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Lundi - Vendredi</FormLabel>
+                                        <FormControl>
+                                            <Input {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="openingHours.saturday"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Samedi</FormLabel>
+                                        <FormControl>
+                                            <Input {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="openingHours.sunday"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Dimanche</FormLabel>
+                                        <FormControl>
+                                            <Input {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                        </CardContent>
+                    </Card>
+
+                    <Button type="submit" disabled={form.formState.isSubmitting || !form.formState.isDirty}>
+                        {form.formState.isSubmitting ? "Enregistrement..." : "Enregistrer les modifications"}
+                    </Button>
+                </form>
+            </Form>
+        </div>
     );
 }

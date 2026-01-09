@@ -73,7 +73,7 @@ export function AboutManager() {
             conclusion: '',
         }
     });
-    
+
     useEffect(() => {
         if (content) {
             form.reset(content);
@@ -99,114 +99,113 @@ export function AboutManager() {
     if (loading) {
         return <AboutManagerSkeleton />;
     }
-    
-    return (
-        <Card>
-            <CardHeader>
-                <CardTitle>Gestion de la page "À Propos"</CardTitle>
-                <CardDescription>Modifiez ici les textes qui apparaissent sur la page "À Propos". L'image n'est pas modifiable depuis cette interface.</CardDescription>
-            </CardHeader>
-            <CardContent>
-                <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                        <FormField
-                            control={form.control}
-                            name="title"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Titre principal</FormLabel>
-                                    <FormControl>
-                                        <Input {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="subtitle"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Sous-titre</FormLabel>
-                                    <FormControl>
-                                        <Textarea className="min-h-[100px]" {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="catherineTitle"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Titre (Catherine)</FormLabel>
-                                    <FormControl>
-                                        <Input {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                         <FormField
-                            control={form.control}
-                            name="catherineText"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Texte (Catherine)</FormLabel>
-                                    <FormControl>
-                                        <Textarea className="min-h-[100px]" {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="soniaTitle"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Titre (Sonia)</FormLabel>
-                                    <FormControl>
-                                        <Input {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="soniaText"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Texte (Sonia)</FormLabel>
-                                    <FormControl>
-                                        <Textarea className="min-h-[100px]" {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="conclusion"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Conclusion</FormLabel>
-                                    <FormControl>
-                                        <Input {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
 
-                        <Button type="submit" disabled={form.formState.isSubmitting || !form.formState.isDirty}>
-                            {form.formState.isSubmitting ? "Enregistrement..." : "Enregistrer les modifications"}
-                        </Button>
-                    </form>
-                </Form>
-            </CardContent>
-        </Card>
+    return (
+        <div className="space-y-6">
+            <div className="flex flex-col gap-2">
+                <h2 className="text-2xl font-heading font-bold text-primary">Gestion de la page "À Propos"</h2>
+                <p className="text-muted-foreground">Modifiez ici les textes qui apparaissent sur la page "À Propos".</p>
+            </div>
+
+            <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                    <FormField
+                        control={form.control}
+                        name="title"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Titre principal</FormLabel>
+                                <FormControl>
+                                    <Input {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="subtitle"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Sous-titre</FormLabel>
+                                <FormControl>
+                                    <Textarea className="min-h-[100px]" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="catherineTitle"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Titre (Catherine)</FormLabel>
+                                <FormControl>
+                                    <Input {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="catherineText"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Texte (Catherine)</FormLabel>
+                                <FormControl>
+                                    <Textarea className="min-h-[100px]" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="soniaTitle"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Titre (Sonia)</FormLabel>
+                                <FormControl>
+                                    <Input {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="soniaText"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Texte (Sonia)</FormLabel>
+                                <FormControl>
+                                    <Textarea className="min-h-[100px]" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="conclusion"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Conclusion</FormLabel>
+                                <FormControl>
+                                    <Input {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+
+                    <Button type="submit" disabled={form.formState.isSubmitting || !form.formState.isDirty}>
+                        {form.formState.isSubmitting ? "Enregistrement..." : "Enregistrer les modifications"}
+                    </Button>
+                </form>
+            </Form>
+        </div>
     );
 }

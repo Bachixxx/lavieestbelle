@@ -12,6 +12,7 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { deleteService } from "./actions";
 import { useToast } from "@/hooks/use-toast";
 import { Skeleton } from "@/components/ui/skeleton";
+import { orderBy } from "firebase/firestore";
 
 function ServicesManagerSkeleton() {
     return (
@@ -36,9 +37,7 @@ function ServicesManagerSkeleton() {
 
 export function ServicesManager() {
     const { data: serviceCategories, loading: loadingCategories } = useCollection<ServiceCategory>('serviceCategories');
-    const { data: services, loading: loadingServices } = useCollection<Service>('services', {
-        orderBy: ['name', 'asc']
-    });
+    const { data: services, loading: loadingServices } = useCollection<Service>('services', orderBy('name', 'asc'));
 
     const [isFormOpen, setIsFormOpen] = useState(false);
     const [selectedService, setSelectedService] = useState<Service | null>(null);
@@ -53,7 +52,7 @@ export function ServicesManager() {
         setSelectedService(service);
         setIsFormOpen(true);
     };
-    
+
     const handleDelete = async (id: string) => {
         const result = await deleteService(id);
         if (result.success) {
@@ -70,46 +69,45 @@ export function ServicesManager() {
     }
 
     return (
-        <>
-            <Card>
-                <CardHeader>
-                    <CardTitle>Gestion des Soins</CardTitle>
-                    <CardDescription>
-                        Gérez ici l&apos;ensemble des soins proposés. Vous pouvez les modifier, les supprimer ou en ajouter de nouveaux.
-                    </CardDescription>
-                    <div className="pt-4">
-                        <Button onClick={handleAdd}>
-                            <CirclePlus className="mr-2" />
-                            Ajouter un soin
-                        </Button>
-                    </div>
-                </CardHeader>
-                <CardContent>
+        <div className="space-y-6">
+            <div className="flex justify-between items-center">
+                <div>
+                    <h2 className="text-2xl font-heading font-bold text-primary">Gestion des Soins</h2>
+                    <p className="text-muted-foreground">Managez l&apos;ensemble de votre carte des soins.</p>
+                </div>
+                <Button onClick={handleAdd}>
+                    <CirclePlus className="mr-2" />
+                    Ajouter un soin
+                </Button>
+            </div>
+
+            <Card className="border-none shadow-sm bg-secondary/5">
+                <CardContent className="p-0">
                     <Accordion type="multiple" className="w-full">
                         {serviceCategories?.map((category) => {
                             const categoryServices = services?.filter(s => s.category === category.id) ?? [];
                             return (
                                 <AccordionItem value={category.id} key={category.id}>
-                                    <AccordionTrigger className="text-lg font-medium hover:no-underline">
+                                    <AccordionTrigger className="text-lg font-medium hover:no-underline px-6 py-4">
                                         {category.title} ({categoryServices.length})
                                     </AccordionTrigger>
                                     <AccordionContent>
-                                        <div className="space-y-4 pl-4">
+                                        <div className="space-y-4 px-6 pb-6">
                                             {categoryServices.length > 0 ? (
                                                 categoryServices.map((service) => (
-                                                    <div key={service.id} className="flex items-center justify-between p-3 rounded-md bg-muted/50">
+                                                    <div key={service.id} className="flex items-center justify-between p-4 rounded-xl bg-background border border-border/50 shadow-sm transition-all hover:shadow-md">
                                                         <div>
-                                                            <p className="font-semibold">{service.name}</p>
-                                                            <p className="text-sm text-muted-foreground">{service.price} - {service.duration}</p>
+                                                            <p className="font-semibold text-lg">{service.name}</p>
+                                                            <p className="text-sm text-muted-foreground mt-1">{service.price} - {service.duration}</p>
                                                         </div>
                                                         <div className="flex items-center gap-2">
-                                                            <Button variant="ghost" size="icon" onClick={() => handleEdit(service)}>
+                                                            <Button variant="ghost" size="icon" onClick={() => handleEdit(service)} className="hover:bg-primary/5 hover:text-primary">
                                                                 <Edit className="h-4 w-4" />
                                                             </Button>
-                                                            
+
                                                             <AlertDialog>
                                                                 <AlertDialogTrigger asChild>
-                                                                    <Button variant="ghost" size="icon" className="text-destructive hover:text-destructive">
+                                                                    <Button variant="ghost" size="icon" className="text-destructive hover:text-destructive hover:bg-destructive/10">
                                                                         <Trash2 className="h-4 w-4" />
                                                                     </Button>
                                                                 </AlertDialogTrigger>
@@ -147,6 +145,6 @@ export function ServicesManager() {
                 service={selectedService}
                 categories={serviceCategories ?? []}
             />
-        </>
+        </div>
     );
 }
