@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { PT_Sans } from 'next/font/google';
+import { Cormorant_Garamond, Plus_Jakarta_Sans } from 'next/font/google';
 import './globals.css';
 import { cn } from '@/lib/utils';
 import { Header } from '@/components/layout/Header';
@@ -7,10 +7,18 @@ import { Footer } from '@/components/layout/Footer';
 import { Toaster } from "@/components/ui/toaster"
 import { FirebaseClientProvider } from '@/firebase/client-provider';
 
-const ptSans = PT_Sans({
+const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
-  weight: ['400', '700'],
+  weight: ['300', '400', '500', '600', '700'],
+  variable: '--font-heading',
+  display: 'swap',
+});
+
+const jakarta = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
   variable: '--font-body',
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
@@ -31,7 +39,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
       </head>
-      <body className={cn('min-h-screen bg-background font-body antialiased', ptSans.variable)}>
+      <body className={cn('min-h-screen bg-background font-body antialiased', cormorant.variable, jakarta.variable)}>
         <FirebaseClientProvider>
           <div className="relative flex min-h-dvh flex-col bg-background">
             <Header />
