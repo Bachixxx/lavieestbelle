@@ -18,6 +18,8 @@ const aboutContentSchema = z.object({
     soniaTitle: z.string().min(1, "Le titre pour Sonia est requis"),
     soniaText: z.string().min(1, "Le texte pour Sonia est requis"),
     conclusion: z.string().min(1, "La conclusion est requise"),
+    imageUrl: z.string().optional(),
+    imageId: z.string().optional(),
 });
 
 export async function updateAboutContent(values: z.infer<typeof aboutContentSchema>) {
@@ -43,6 +45,7 @@ export async function updateAboutContent(values: z.infer<typeof aboutContentSche
 const contactInfoSchema = z.object({
     address: z.string().min(1, "L'adresse est requise"),
     phone: z.string().min(1, "Le téléphone est requis"),
+    email: z.string().email("Email invalide").min(1, "L'email est requis"),
     openingHours: z.object({
         weekdays: z.string().min(1, "Les horaires de la semaine sont requis"),
         saturday: z.string().min(1, "Les horaires du samedi sont requis"),
@@ -104,6 +107,29 @@ export async function updateService(id: string, values: z.infer<typeof serviceSc
 export async function deleteService(id: string) {
     try {
         await deleteDoc(doc(firestore, "services", id));
+        revalidatePath("/services");
+        revalidatePath("/admin");
+        return { success: true };
+    } catch (error: any) {
+        return { success: false, error: error.message };
+    }
+}
+
+const serviceCategorySchema = z.object({
+    title: z.string().min(1),
+    description: z.string().min(1),
+    previewDescription: z.string().min(1),
+    imageUrl: z.string().optional(),
+});
+
+export async function updateServiceCategory(id: string, values: z.infer<typeof serviceCategorySchema>) {
+    const validatedFields = serviceCategorySchema.safeParse(values);
+    if (!validatedFields.success) {
+        return { success: false, error: "Champs invalides" };
+    }
+    try {
+        const docRef = doc(firestore, "serviceCategories", id);
+        await updateDoc(docRef, validatedFields.data);
         revalidatePath("/services");
         revalidatePath("/admin");
         return { success: true };

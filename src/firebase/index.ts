@@ -4,16 +4,19 @@ import { getFirestore, Firestore } from 'firebase/firestore';
 import { firebaseConfig } from './config';
 
 // Hooks and providers
-export { FirebaseProvider, useFirebase, useFirebaseApp, useAuth, useFirestore } from './provider';
+export { FirebaseProvider, useFirebase, useFirebaseApp, useAuth, useFirestore, useStorage } from './provider';
 export { FirebaseClientProvider } from './client-provider';
 export { useUser } from './auth/use-user';
 export { useCollection } from './firestore/use-collection';
 export { useDoc } from './firestore/use-doc';
 
+import { getStorage, FirebaseStorage } from 'firebase/storage';
+
 type FirebaseInstances = {
   app: FirebaseApp;
   auth: Auth;
   firestore: Firestore;
+  storage: FirebaseStorage;
 };
 
 let instances: FirebaseInstances;
@@ -32,8 +35,9 @@ export function initializeFirebaseServer(): FirebaseInstances {
   const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
   const auth = getAuth(app);
   const firestore = getFirestore(app);
+  const storage = getStorage(app);
 
-  instances = { app, auth, firestore };
+  instances = { app, auth, firestore, storage };
   return instances;
 }
 
@@ -42,13 +46,14 @@ export function initializeFirebaseServer(): FirebaseInstances {
 // This function is idempotent, meaning it can be called multiple times without
 // creating new instances.
 export function initializeFirebase(): FirebaseInstances {
-  if (instances) {
+  if (instances && instances.storage) {
     return instances;
   }
   const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
   const auth = getAuth(app);
   const firestore = getFirestore(app);
+  const storage = getStorage(app);
 
-  instances = { app, auth, firestore };
+  instances = { app, auth, firestore, storage };
   return instances;
 }

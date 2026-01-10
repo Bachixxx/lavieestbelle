@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { Star, Quote } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import {
@@ -29,6 +30,52 @@ function TestimonialSkeleton() {
           <Skeleton className="h-4 w-full mt-2" />
           <Skeleton className="h-4 w-5/6 mt-1" />
           <Skeleton className="h-6 w-1/3 mt-4" />
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
+function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const MAX_LENGTH = 150;
+  const shouldTruncate = testimonial.text.length > MAX_LENGTH;
+
+  return (
+    <div className="h-full relative group">
+      <div className="absolute inset-0 bg-secondary/20 rounded-2xl transform rotate-1 group-hover:rotate-2 transition-transform duration-300" />
+      <Card className="h-full flex flex-col justify-between border-none shadow-sm relative bg-background/80 backdrop-blur-sm hover:shadow-md transition-all duration-300 rounded-2xl">
+        <CardContent className="flex flex-col gap-6 p-8 relative">
+          <Quote className="h-8 w-8 text-primary/20 rotate-180 absolute top-6 left-6" />
+
+          <div className="flex gap-1 justify-center mt-4">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <Star
+                key={i}
+                className={`h-4 w-4 ${i < testimonial.rating ? 'text-primary fill-primary' : 'text-muted-foreground/30'
+                  }`}
+              />
+            ))}
+          </div>
+
+          <div className="text-center relative z-10 transition-all duration-300">
+            <p className="text-lg italic text-foreground/80 leading-relaxed">
+              &quot;{shouldTruncate && !isExpanded ? testimonial.text.slice(0, MAX_LENGTH) + '...' : testimonial.text}&quot;
+            </p>
+            {shouldTruncate && (
+              <button
+                onClick={() => setIsExpanded(!isExpanded)}
+                className="text-sm font-medium text-primary mt-2 hover:underline focus:outline-none"
+              >
+                {isExpanded ? "Réduire" : "Lire la suite"}
+              </button>
+            )}
+          </div>
+
+          <div className="mt-auto pt-4 border-t border-border/40 text-center">
+            <p className="font-heading font-bold text-xl text-primary">{testimonial.author}</p>
+            {testimonial.role && <p className="text-sm text-muted-foreground">{testimonial.role}</p>}
+          </div>
         </CardContent>
       </Card>
     </div>
@@ -70,29 +117,7 @@ export function Testimonials() {
             )}
             {testimonials?.map((testimonial) => (
               <CarouselItem key={testimonial.id} className="md:basis-1/2 lg:basis-1/3 p-4">
-                <div className="h-full relative group">
-                  <div className="absolute inset-0 bg-secondary/20 rounded-2xl transform rotate-1 group-hover:rotate-2 transition-transform duration-300" />
-                  <Card className="h-full flex flex-col justify-between border-none shadow-sm relative bg-background/80 backdrop-blur-sm hover:shadow-md transition-all duration-300 rounded-2xl">
-                    <CardContent className="flex flex-col gap-6 p-8 relative">
-                      <Quote className="h-8 w-8 text-primary/20 rotate-180 absolute top-6 left-6" />
-
-                      <div className="flex gap-1 justify-center mt-4">
-                        {Array.from({ length: 5 }).map((_, i) => (
-                          <Star
-                            key={i}
-                            className={`h-4 w-4 ${i < testimonial.rating ? 'text-primary fill-primary' : 'text-muted-foreground/30'
-                              }`}
-                          />
-                        ))}
-                      </div>
-                      <p className="text-lg italic text-foreground/80 text-center leading-relaxed relative z-10">&quot;{testimonial.text}&quot;</p>
-
-                      <div className="mt-auto pt-4 border-t border-border/40 text-center">
-                        <p className="font-heading font-bold text-xl text-primary">{testimonial.author}</p>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </div>
+                <TestimonialCard testimonial={testimonial} />
               </CarouselItem>
             ))}
           </CarouselContent>

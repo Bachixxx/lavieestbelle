@@ -35,12 +35,18 @@ function ServicesManagerSkeleton() {
     );
 }
 
+import { CategoryForm } from "./category-form";
+
+// ... existing imports
+
 export function ServicesManager() {
     const { data: serviceCategories, loading: loadingCategories } = useCollection<ServiceCategory>('serviceCategories');
     const { data: services, loading: loadingServices } = useCollection<Service>('services', orderBy('name', 'asc'));
 
     const [isFormOpen, setIsFormOpen] = useState(false);
+    const [isCategoryFormOpen, setIsCategoryFormOpen] = useState(false);
     const [selectedService, setSelectedService] = useState<Service | null>(null);
+    const [selectedCategory, setSelectedCategory] = useState<ServiceCategory | null>(null);
     const { toast } = useToast();
 
     const handleAdd = () => {
@@ -60,6 +66,11 @@ export function ServicesManager() {
         } else {
             toast({ variant: "destructive", title: "Erreur", description: "La suppression du soin a échoué." });
         }
+    };
+
+    const handleEditCategory = (category: ServiceCategory) => {
+        setSelectedCategory(category);
+        setIsCategoryFormOpen(true);
     };
 
     const isLoading = loadingCategories || loadingServices;
@@ -87,12 +98,27 @@ export function ServicesManager() {
                         {serviceCategories?.map((category) => {
                             const categoryServices = services?.filter(s => s.category === category.id) ?? [];
                             return (
-                                <AccordionItem value={category.id} key={category.id}>
+                                <AccordionItem value={category.id} key={category.id} className="relative group">
+                                    <div className="absolute right-12 top-4 z-20">
+                                        <Button
+                                            size="sm"
+                                            variant="ghost"
+                                            className="opacity-0 group-hover:opacity-100 transition-opacity"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                handleEditCategory(category);
+                                            }}
+                                        >
+                                            <Edit className="h-4 w-4 mr-2" />
+                                            Modifier la catégorie
+                                        </Button>
+                                    </div>
                                     <AccordionTrigger className="text-lg font-medium hover:no-underline px-6 py-4">
-                                        {category.title} ({categoryServices.length})
+                                        <span>{category.title} ({categoryServices.length})</span>
                                     </AccordionTrigger>
                                     <AccordionContent>
                                         <div className="space-y-4 px-6 pb-6">
+                                            {/* ... services map ... */}
                                             {categoryServices.length > 0 ? (
                                                 categoryServices.map((service) => (
                                                     <div key={service.id} className="flex items-center justify-between p-4 rounded-xl bg-background border border-border/50 shadow-sm transition-all hover:shadow-md">
@@ -144,6 +170,11 @@ export function ServicesManager() {
                 setIsOpen={setIsFormOpen}
                 service={selectedService}
                 categories={serviceCategories ?? []}
+            />
+            <CategoryForm
+                isOpen={isCategoryFormOpen}
+                setIsOpen={setIsCategoryFormOpen}
+                category={selectedCategory}
             />
         </div>
     );

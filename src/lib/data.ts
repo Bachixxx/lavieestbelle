@@ -24,15 +24,17 @@ export interface ServiceCategory {
   description: string;
   previewDescription: string;
   imageId: string;
+  imageUrl?: string;
 }
 
 export const getImageById = (id: string): ImagePlaceholder | undefined => {
-    return PlaceHolderImages.find(img => img.id === id);
+  return PlaceHolderImages.find(img => img.id === id);
 }
 
 export interface Testimonial {
-    id: string;
-    text: string;
-    author: string;
-    rating: number;
+  id: string;
+  text: string;
+  author: string;
+  role?: string;
+  rating: number;
 }

@@ -18,6 +18,7 @@ interface AboutContent {
   soniaText: string;
   conclusion: string;
   imageId: string;
+  imageUrl?: string;
 }
 
 function AboutPageSkeleton() {
@@ -60,7 +61,8 @@ export default function AboutPage() {
     return <div className="text-center py-24">Contenu non trouvé. Veuillez initialiser les données depuis la page Admin.</div>;
   }
 
-  const aboutImage = getImageById(content.imageId);
+  const placeholderImage = getImageById(content.imageId);
+  const displayImageUrl = content.imageUrl || placeholderImage?.imageUrl;
 
   return (
     <div className="bg-background min-h-screen overflow-x-hidden">
@@ -99,14 +101,14 @@ export default function AboutPage() {
               transition={{ duration: 0.8 }}
               className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl"
             >
-              {aboutImage && (
+              {displayImageUrl && (
                 <Image
-                  src={aboutImage.imageUrl}
-                  alt={aboutImage.description}
+                  src={displayImageUrl}
+                  alt={placeholderImage?.description || "Catherine Nussbaumer"}
                   fill
                   className="object-cover"
                   sizes="(max-width: 1024px) 100vw, 40vw"
-                  data-ai-hint={aboutImage.imageHint}
+                  data-ai-hint={placeholderImage?.imageHint}
                 />
               )}
               <div className="absolute inset-0 ring-1 ring-inset ring-black/10 rounded-2xl"></div>

@@ -13,6 +13,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
 import { useEffect } from "react";
 import { updateAboutContent } from "./actions";
+import { ImageUpload } from "@/components/admin/image-upload";
 
 interface AboutContent {
     id: string;
@@ -24,6 +25,7 @@ interface AboutContent {
     soniaText: string;
     conclusion: string;
     imageId: string;
+    imageUrl?: string;
 }
 
 const formSchema = z.object({
@@ -34,6 +36,7 @@ const formSchema = z.object({
     soniaTitle: z.string().min(1, "Le titre pour Sonia est requis"),
     soniaText: z.string().min(1, "Le texte pour Sonia est requis"),
     conclusion: z.string().min(1, "La conclusion est requise"),
+    imageUrl: z.string().optional(),
 });
 
 function AboutManagerSkeleton() {
@@ -71,17 +74,24 @@ export function AboutManager() {
             soniaTitle: '',
             soniaText: '',
             conclusion: '',
+            imageUrl: '',
         }
     });
 
     useEffect(() => {
         if (content) {
-            form.reset(content);
+            form.reset({
+                ...content,
+                imageUrl: content.imageUrl || '',
+            });
         }
     }, [content, form]);
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
-        const result = await updateAboutContent(values);
+        const result = await updateAboutContent({
+            ...values,
+            imageId: content?.imageId || 'about-hero',
+        });
         if (result.success) {
             toast({
                 title: "Succès",
@@ -109,32 +119,62 @@ export function AboutManager() {
 
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                    <FormField
-                        control={form.control}
-                        name="title"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Titre principal</FormLabel>
-                                <FormControl>
-                                    <Input {...field} />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name="subtitle"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Sous-titre</FormLabel>
-                                <FormControl>
-                                    <Textarea className="min-h-[100px]" {...field} />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
+
+                    <Card className="border-none shadow-sm bg-secondary/5">
+                        <CardHeader>
+                            <CardTitle>Image Principale (Catherine)</CardTitle>
+                            <CardDescription>Changez la photo principale qui apparaît sur la page.</CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                            <FormField
+                                control={form.control}
+                                name="imageUrl"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormControl>
+                                            <ImageUpload
+                                                onUploadComplete={(url) => field.onChange(url)}
+                                                currentImageUrl={field.value}
+                                                folderName="about"
+                                                label="Photo de Catherine"
+                                            />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                        </CardContent>
+                    </Card>
+
+                    <div className="grid gap-6 md:grid-cols-2">
+                        <FormField
+                            control={form.control}
+                            name="title"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Titre principal</FormLabel>
+                                    <FormControl>
+                                        <Input {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="subtitle"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Sous-titre</FormLabel>
+                                    <FormControl>
+                                        <Textarea className="min-h-[100px]" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                    </div>
+
                     <FormField
                         control={form.control}
                         name="catherineTitle"

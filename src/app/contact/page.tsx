@@ -15,6 +15,7 @@ interface ContactInfo {
     id: string;
     address: string;
     phone: string;
+    email: string;
     openingHours: {
         weekdays: string;
         saturday: string;
@@ -40,10 +41,22 @@ function ContactPageSkeleton() {
     )
 }
 
+const defaultContactInfo: ContactInfo = {
+    id: 'default',
+    address: 'Chemin des Vignes 12, 1293 Bellevue, Suisse',
+    phone: '+41 79 370 77 65',
+    email: 'info@lavieestbelle.ch',
+    openingHours: {
+        weekdays: '09:00 - 19:00',
+        saturday: '09:00 - 17:00',
+        sunday: 'Fermé'
+    }
+};
+
 export default function ContactPage() {
     const mapImage = getImageById('contact-map');
     const { data: contactInfo, loading } = useDoc<ContactInfo>('contactInfo/info');
-    const googleMapsUrl = contactInfo ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(contactInfo.address)}` : '';
+    const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(contactInfo?.address || defaultContactInfo.address)}`;
 
 
     return (
@@ -73,7 +86,7 @@ export default function ContactPage() {
 
             <div className="container mx-auto max-w-7xl px-4 -mt-10 pb-24 relative z-10">
 
-                {loading ? <ContactPageSkeleton /> : contactInfo && (
+                {(loading ? <ContactPageSkeleton /> : (
                     <div className="grid lg:grid-cols-12 gap-8 lg:gap-12">
 
                         {/* Contact Form */}
@@ -102,13 +115,13 @@ export default function ContactPage() {
                                         </h3>
                                         <div className="space-y-4 pl-9">
                                             <a href={googleMapsUrl} target="_blank" rel="noopener noreferrer" className="block text-lg hover:text-primary transition-colors leading-relaxed">
-                                                {contactInfo.address}
+                                                {contactInfo?.address || defaultContactInfo.address}
                                             </a>
-                                            <a href={`tel:${contactInfo.phone.replace(/\s/g, '')}`} className="block text-lg hover:text-primary transition-colors">
-                                                {contactInfo.phone}
+                                            <a href={`tel:${(contactInfo?.phone || defaultContactInfo.phone).replace(/\s/g, '')}`} className="block text-lg hover:text-primary transition-colors">
+                                                {contactInfo?.phone || defaultContactInfo.phone}
                                             </a>
-                                            <a href="mailto:info@lavieestbelle.ch" className="block text-lg hover:text-primary transition-colors">
-                                                info@lavieestbelle.ch
+                                            <a href={`mailto:${contactInfo?.email || defaultContactInfo.email}`} className="block text-lg hover:text-primary transition-colors">
+                                                {contactInfo?.email || defaultContactInfo.email}
                                             </a>
                                         </div>
                                     </div>
@@ -120,15 +133,15 @@ export default function ContactPage() {
                                         <div className="space-y-3 pl-9 text-muted-foreground text-lg">
                                             <div className="flex justify-between border-b border-primary/10 pb-2">
                                                 <span>Lundi - Vendredi</span>
-                                                <span className="font-medium text-foreground">{contactInfo.openingHours.weekdays}</span>
+                                                <span className="font-medium text-foreground">{contactInfo?.openingHours.weekdays || defaultContactInfo.openingHours.weekdays}</span>
                                             </div>
                                             <div className="flex justify-between border-b border-primary/10 pb-2">
                                                 <span>Samedi</span>
-                                                <span className="font-medium text-foreground">{contactInfo.openingHours.saturday}</span>
+                                                <span className="font-medium text-foreground">{contactInfo?.openingHours.saturday || defaultContactInfo.openingHours.saturday}</span>
                                             </div>
                                             <div className="flex justify-between pt-1">
                                                 <span>Dimanche</span>
-                                                <span className="font-medium text-foreground">{contactInfo.openingHours.sunday}</span>
+                                                <span className="font-medium text-foreground">{contactInfo?.openingHours.sunday || defaultContactInfo.openingHours.sunday}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -136,11 +149,7 @@ export default function ContactPage() {
                             </Card>
                         </motion.div>
                     </div>
-                )}
-
-                {!loading && !contactInfo && (
-                    <div className="text-center py-24 bg-muted/20 rounded-xl mt-12">Données de contact non trouvées.</div>
-                )}
+                ))}
 
                 {/* Map Section */}
                 <motion.div

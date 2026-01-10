@@ -183,7 +183,8 @@ export default function ServicesPage() {
               <div className="space-y-24">
                 {serviceCategories.map((category) => {
                   const categoryServices = services.filter(s => s.category === category.id);
-                  const categoryImage = getImageById(category.imageId);
+                  const placeholderImage = getImageById(category.imageId);
+                  const displayImageUrl = category.imageUrl || placeholderImage?.imageUrl;
 
                   if (categoryServices.length === 0) return null;
 
@@ -191,15 +192,15 @@ export default function ServicesPage() {
                     <section key={category.id} id={category.id} className="scroll-mt-28">
                       {/* Category Header */}
                       <div className="mb-10">
-                        {categoryImage && (
+                        {displayImageUrl && (
                           <div className="relative aspect-[21/9] md:aspect-[21/8] w-full rounded-2xl overflow-hidden shadow-lg mb-8 group">
                             <Image
-                              src={categoryImage.imageUrl}
-                              alt={categoryImage.description}
+                              src={displayImageUrl}
+                              alt={placeholderImage?.description || category.title}
                               fill
                               className="object-cover transition-transform duration-700 group-hover:scale-105"
                               sizes="(max-width: 768px) 100vw, 800px"
-                              data-ai-hint={categoryImage.imageHint}
+                              data-ai-hint={placeholderImage?.imageHint}
                             />
                             <div className="absolute inset-0 bg-black/20" />
                             <div className="absolute inset-0 flex items-center justify-center">
@@ -210,7 +211,7 @@ export default function ServicesPage() {
                           </div>
                         )}
 
-                        {!categoryImage && (
+                        {!displayImageUrl && (
                           <h2 className="text-4xl font-heading font-bold text-primary mb-6 border-b border-primary/20 pb-4 inline-block">
                             {category.title}
                           </h2>

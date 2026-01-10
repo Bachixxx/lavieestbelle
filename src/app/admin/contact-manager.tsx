@@ -17,6 +17,7 @@ interface ContactInfo {
     id: string;
     address: string;
     phone: string;
+    email: string;
     openingHours: {
         weekdays: string;
         saturday: string;
@@ -24,9 +25,22 @@ interface ContactInfo {
     }
 }
 
+const defaultContactInfo: ContactInfo = {
+    id: 'default',
+    address: 'Chemin des Vignes 12, 1293 Bellevue, Suisse',
+    phone: '+41 79 370 77 65',
+    email: 'info@lavieestbelle.ch',
+    openingHours: {
+        weekdays: '09:00 - 19:00',
+        saturday: '09:00 - 17:00',
+        sunday: 'Fermé'
+    }
+};
+
 const formSchema = z.object({
     address: z.string().min(1, "L'adresse est requise"),
     phone: z.string().min(1, "Le téléphone est requis"),
+    email: z.string().email("Email invalide").min(1, "L'email est requis"),
     openingHours: z.object({
         weekdays: z.string().min(1, "Les horaires de la semaine sont requis"),
         saturday: z.string().min(1, "Les horaires du samedi sont requis"),
@@ -47,6 +61,7 @@ function ContactManagerSkeleton() {
                 <Skeleton className="h-10 w-full" />
                 <Skeleton className="h-10 w-full" />
                 <Skeleton className="h-10 w-full" />
+                <Skeleton className="h-10 w-full" />
                 <Skeleton className="h-12 w-32 mt-4" />
             </CardContent>
         </Card>
@@ -60,13 +75,10 @@ export function ContactManager() {
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            address: '',
-            phone: '',
-            openingHours: {
-                weekdays: '',
-                saturday: '',
-                sunday: '',
-            }
+            address: defaultContactInfo.address,
+            phone: defaultContactInfo.phone,
+            email: defaultContactInfo.email,
+            openingHours: defaultContactInfo.openingHours
         }
     });
 
@@ -118,19 +130,34 @@ export function ContactManager() {
                             </FormItem>
                         )}
                     />
-                    <FormField
-                        control={form.control}
-                        name="phone"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Téléphone</FormLabel>
-                                <FormControl>
-                                    <Input {...field} />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
+                    <div className="grid md:grid-cols-2 gap-4">
+                        <FormField
+                            control={form.control}
+                            name="phone"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Téléphone</FormLabel>
+                                    <FormControl>
+                                        <Input {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="email"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Email</FormLabel>
+                                    <FormControl>
+                                        <Input {...field} type="email" />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                    </div>
                     <Card>
                         <CardHeader>
                             <CardTitle className="text-lg">Horaires d'ouverture</CardTitle>

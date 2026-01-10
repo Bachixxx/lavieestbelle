@@ -5,16 +5,20 @@ import type { Auth } from 'firebase/auth';
 import type { Firestore } from 'firebase/firestore';
 import { FirebaseErrorListener } from '@/components/FirebaseErrorListener';
 
+import { getStorage, FirebaseStorage } from 'firebase/storage';
+// ...
 interface FirebaseContextValue {
   app: FirebaseApp | null;
   auth: Auth | null;
   firestore: Firestore | null;
+  storage: FirebaseStorage | null;
 }
 
 const FirebaseContext = createContext<FirebaseContextValue>({
   app: null,
   auth: null,
   firestore: null,
+  storage: null,
 });
 
 export function FirebaseProvider({
@@ -22,19 +26,22 @@ export function FirebaseProvider({
   app,
   auth,
   firestore,
+  storage,
 }: {
   children: React.ReactNode;
   app: FirebaseApp;
   auth: Auth;
   firestore: Firestore;
+  storage: FirebaseStorage;
 }) {
   const value = useMemo(
     () => ({
       app,
       auth,
       firestore,
+      storage,
     }),
-    [app, auth, firestore]
+    [app, auth, firestore, storage]
   );
 
   return (
@@ -46,6 +53,16 @@ export function FirebaseProvider({
 }
 
 export const useFirebase = () => useContext(FirebaseContext);
+
+// ... existing hooks
+
+export const useStorage = () => {
+  const { storage } = useFirebase();
+  if (!storage) {
+    throw new Error('Firebase Storage not available in context');
+  }
+  return storage;
+};
 
 export const useFirebaseApp = () => {
   const { app } = useFirebase();
