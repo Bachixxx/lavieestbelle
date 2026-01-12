@@ -17,7 +17,6 @@ interface ContactInfo {
     id: string;
     address: string;
     phone: string;
-    email: string;
     openingHours: {
         weekdays: string;
         saturday: string;
@@ -29,7 +28,6 @@ const defaultContactInfo: ContactInfo = {
     id: 'default',
     address: 'Chemin des Vignes 12, 1293 Bellevue, Suisse',
     phone: '+41 79 370 77 65',
-    email: 'info@lavieestbelle.ch',
     openingHours: {
         weekdays: '09:00 - 19:00',
         saturday: '09:00 - 17:00',
@@ -40,7 +38,6 @@ const defaultContactInfo: ContactInfo = {
 const formSchema = z.object({
     address: z.string().min(1, "L'adresse est requise"),
     phone: z.string().min(1, "Le téléphone est requis"),
-    email: z.string().email("Email invalide").min(1, "L'email est requis"),
     openingHours: z.object({
         weekdays: z.string().min(1, "Les horaires de la semaine sont requis"),
         saturday: z.string().min(1, "Les horaires du samedi sont requis"),
@@ -61,7 +58,6 @@ function ContactManagerSkeleton() {
                 <Skeleton className="h-10 w-full" />
                 <Skeleton className="h-10 w-full" />
                 <Skeleton className="h-10 w-full" />
-                <Skeleton className="h-10 w-full" />
                 <Skeleton className="h-12 w-32 mt-4" />
             </CardContent>
         </Card>
@@ -77,7 +73,6 @@ export function ContactManager() {
         defaultValues: {
             address: defaultContactInfo.address,
             phone: defaultContactInfo.phone,
-            email: defaultContactInfo.email,
             openingHours: defaultContactInfo.openingHours
         }
     });
@@ -139,19 +134,6 @@ export function ContactManager() {
                                     <FormLabel>Téléphone</FormLabel>
                                     <FormControl>
                                         <Input {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="email"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Email</FormLabel>
-                                    <FormControl>
-                                        <Input {...field} type="email" />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>

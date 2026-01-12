@@ -15,7 +15,6 @@ interface ContactInfo {
     id: string;
     address: string;
     phone: string;
-    email: string;
     openingHours: {
         weekdays: string;
         saturday: string;
@@ -45,7 +44,6 @@ const defaultContactInfo: ContactInfo = {
     id: 'default',
     address: 'Chemin des Vignes 12, 1293 Bellevue, Suisse',
     phone: '+41 79 370 77 65',
-    email: 'info@lavieestbelle.ch',
     openingHours: {
         weekdays: '09:00 - 19:00',
         saturday: '09:00 - 17:00',
@@ -119,9 +117,6 @@ export default function ContactPage() {
                                             </a>
                                             <a href={`tel:${(contactInfo?.phone || defaultContactInfo.phone).replace(/\s/g, '')}`} className="block text-lg hover:text-primary transition-colors">
                                                 {contactInfo?.phone || defaultContactInfo.phone}
-                                            </a>
-                                            <a href={`mailto:${contactInfo?.email || defaultContactInfo.email}`} className="block text-lg hover:text-primary transition-colors">
-                                                {contactInfo?.email || defaultContactInfo.email}
                                             </a>
                                         </div>
                                     </div>

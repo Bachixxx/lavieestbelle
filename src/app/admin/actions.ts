@@ -45,7 +45,6 @@ export async function updateAboutContent(values: z.infer<typeof aboutContentSche
 const contactInfoSchema = z.object({
     address: z.string().min(1, "L'adresse est requise"),
     phone: z.string().min(1, "Le téléphone est requis"),
-    email: z.string().email("Email invalide").min(1, "L'email est requis"),
     openingHours: z.object({
         weekdays: z.string().min(1, "Les horaires de la semaine sont requis"),
         saturday: z.string().min(1, "Les horaires du samedi sont requis"),
