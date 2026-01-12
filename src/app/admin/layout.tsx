@@ -42,7 +42,7 @@ export default function AdminLayout({
     return (
         <div className="min-h-screen bg-background">
             <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-                <div className="container flex h-16 items-center justify-between">
+                <div className="container mx-auto max-w-7xl px-4 flex h-16 items-center justify-between">
                     <div className="font-bold text-lg">
                         <Link href="/admin">Admin Dashboard</Link>
                     </div>
@@ -59,7 +59,7 @@ export default function AdminLayout({
                     </div>
                 </div>
             </header>
-            <main className="container py-6">
+            <main>
                 {children}
             </main>
         </div>

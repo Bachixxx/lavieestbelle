@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Menu, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
@@ -26,6 +27,13 @@ export function Header() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const pathname = usePathname();
+
+  // Hide header on admin and login pages
+  if (pathname?.startsWith('/admin') || pathname?.startsWith('/login')) {
+    return null;
+  }
 
   return (
     <motion.header
