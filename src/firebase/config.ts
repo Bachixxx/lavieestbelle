@@ -7,11 +7,11 @@
 
 // Replace this with your own Firebase configuration
 export const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
+  apiKey: "AIzaSyBRp25AG4i0cQ8hOtd2T-1VpeYrBZM9wds",
+  authDomain: "la-vie-est-belle-193e5.firebaseapp.com",
+  projectId: "la-vie-est-belle-193e5",
+  storageBucket: "la-vie-est-belle-193e5.firebasestorage.app",
+  messagingSenderId: "154658692888",
+  appId: "1:154658692888:web:8b93d60e1256a7b876086d",
+  measurementId: "G-MKHVKMW68J"
 };
