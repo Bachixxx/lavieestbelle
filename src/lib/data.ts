@@ -6,7 +6,6 @@ export const navLinks = [
   { href: "/services", label: "Soins" },
   { href: "/about", label: "À Propos" },
   { href: "/contact", label: "Contact" },
-  { href: "/admin", label: "Admin" },
 ];
 
 export interface Service {
