@@ -9,7 +9,7 @@ import { getStorage, FirebaseStorage } from 'firebase/storage';
 // ...
 interface FirebaseContextValue {
   app: FirebaseApp | null;
-  auth: Auth | null;
+  auth: Auth | null | undefined;
   firestore: Firestore | null;
   storage: FirebaseStorage | null;
 }
@@ -30,7 +30,7 @@ export function FirebaseProvider({
 }: {
   children: React.ReactNode;
   app: FirebaseApp;
-  auth: Auth;
+  auth?: Auth;
   firestore: Firestore;
   storage: FirebaseStorage;
 }) {
@@ -74,9 +74,8 @@ export const useFirebaseApp = () => {
 
 export const useAuth = () => {
   const { auth } = useFirebase();
-  if (!auth) {
-    throw new Error('Firebase Auth not available in context');
-  }
+  // Auth is now optional/lazy-loaded. 
+  // Consumers must handle potential null/undefined.
   return auth;
 };
 
